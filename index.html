@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pintulac · Generador de Contenido Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#001389;--blue-mid:#001eb5;--blue-light:#e8eaf6;--blue-xlight:#f0f2fa;
+  --yellow:#FAEF0B;--yellow-dk:#d4c900;
+  --cel:#29A4DE;--cel-light:#e8f5fd;--cel-dark:#1a85b8;
+  --white:#fff;--bg:#F2F4F8;--card:#fff;--border:#dde2f0;
+  --text:#0D1340;--text2:#4A5080;--text3:#8892b0;
+  --success:#0fb86a;--warn:#f59e0b;--danger:#ef4444;
+  --sh:0 2px 12px rgba(0,19,137,.07);--sh-lg:0 8px 28px rgba(0,19,137,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;min-height:100vh;}
+
+/* ── TOPBAR ───────────────────────────────────── */
+.topbar{background:var(--blue);padding:0 24px;display:flex;align-items:center;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.22);}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.logo svg{width:36px;height:36px;flex-shrink:0;}
+.logo-name{font-size:19px;font-weight:900;color:var(--yellow);letter-spacing:2px;}
+.logo-tag{font-size:8px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.tb-sep{width:1px;height:28px;background:rgba(255,255,255,.15);margin:0 18px;}
+.tb-info h1{font-size:11px;font-weight:800;color:rgba(255,255,255,.9);letter-spacing:2px;text-transform:uppercase;}
+.tb-info p{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px;margin-top:2px;}
+
+/* ── PAGE ─────────────────────────────────────── */
+.page{max-width:1300px;margin:0 auto;padding:24px 18px 80px;display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start;}
+
+/* ── CARD ─────────────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:var(--sh);}
+.card.highlight{border-color:var(--cel);border-width:1.5px;}
+
+/* ── STEP HDR ─────────────────────────────────── */
+.shdr{display:flex;align-items:center;gap:9px;margin-bottom:14px;}
+.sn{width:24px;height:24px;background:var(--blue);color:var(--yellow);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;}
+.st{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);}
+.shdr::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── GRIDS ────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;}
+.gf{grid-column:1/-1;}
+
+/* ── FIELDS ───────────────────────────────────── */
+.f{display:flex;flex-direction:column;gap:5px;}
+.lbl{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--text2);}
+.req{color:var(--cel);}
+input[type=text],input[type=password],textarea,select{
+  background:#fff;border:1.5px solid var(--border);color:var(--text);
+  font-family:'Montserrat',sans-serif;font-size:12.5px;font-weight:500;
+  padding:9px 11px;outline:none;border-radius:6px;width:100%;
+  transition:border-color .2s,box-shadow .2s;
+}
+input:focus,textarea:focus,select:focus{border-color:var(--cel);box-shadow:0 0 0 3px rgba(41,164,222,.1);}
+input::placeholder,textarea::placeholder{color:var(--text3);}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238892b0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:28px;cursor:pointer;appearance:none;}
+select:disabled{opacity:.45;cursor:not-allowed;background-color:#f8f9fc;}
+select option{background:#fff;}
+textarea{resize:vertical;min-height:70px;line-height:1.55;}
+.hint{font-size:10px;color:var(--text3);font-weight:500;}
+
+/* ── MODE TOGGLE ──────────────────────────────── */
+.mode-bar{display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;}
+.mopt{flex:1;padding:9px 8px;text-align:center;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);cursor:pointer;border:none;background:transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;}
+.mopt.on{background:var(--blue);color:var(--yellow);}
+.mopt:not(.on):hover{background:var(--blue-xlight);color:var(--blue);}
+
+/* ── DROP ZONES ───────────────────────────────── */
+.dz{border:2px dashed var(--border);border-radius:8px;padding:28px 16px;text-align:center;cursor:pointer;transition:all .2s;background:#fafbff;}
+.dz:hover,.dz.over{border-color:var(--cel);background:var(--cel-light);}
+.dz.loaded{border-color:var(--success);border-style:solid;background:#f0fdf7;}
+.dz-ic{font-size:30px;margin-bottom:7px;}
+.dz-tx{font-size:12px;font-weight:700;color:var(--text2);}
+.dz-sb{font-size:10px;color:var(--text3);margin-top:3px;}
+.dz.loaded .dz-tx{color:var(--success);}
+
+/* Image preview */
+.img-preview{display:none;margin-top:10px;border-radius:6px;overflow:hidden;border:1px solid var(--border);}
+.img-preview img{width:100%;max-height:200px;object-fit:contain;background:#f8f9fc;}
+.img-preview.on{display:block;}
+
+/* ── CHANNEL SELECTOR ─────────────────────────── */
+.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.ch-chip{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;}
+.ch-chip:hover{border-color:var(--blue);background:var(--blue-xlight);}
+.ch-chip.on{border-color:var(--blue);background:var(--blue-light);}
+.ch-chip input{display:none;}
+.ch-icon{font-size:18px;flex-shrink:0;}
+.ch-info{flex:1;min-width:0;}
+.ch-name{font-size:10px;font-weight:800;color:var(--text);letter-spacing:.5px;}
+.ch-desc{font-size:9px;color:var(--text3);margin-top:1px;}
+.ch-check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.ch-chip.on .ch-check{background:var(--blue);border-color:var(--blue);}
+.ch-chip.on .ch-check::after{content:'✓';font-size:9px;color:var(--yellow);font-weight:900;}
+.ch-chip.on .ch-name{color:var(--blue);}
+.ch-all-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.ch-all-row span{font-size:10px;color:var(--text3);font-weight:600;}
+.btn-sel-all{font-size:10px;font-weight:700;color:var(--blue);background:none;border:none;cursor:pointer;padding:0;letter-spacing:.5px;}
+.btn-sel-all:hover{text-decoration:underline;}
+
+/* ── INFO BANNER ──────────────────────────────── */
+.banner{background:var(--cel-light);border:1px solid var(--cel);border-radius:8px;padding:10px 13px;display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;}
+.banner p{font-size:11px;color:var(--blue);font-weight:500;line-height:1.5;}
+.banner strong{font-weight:700;}
+
+/* ── GENERATE BTN ─────────────────────────────── */
+.btn-gen{width:100%;padding:14px 20px;background:var(--blue);color:var(--yellow);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(0,19,137,.22);display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-gen:hover:not(:disabled){background:var(--blue-mid);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,19,137,.28);}
+.btn-gen:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.spin{width:13px;height:13px;border:2.5px solid rgba(250,239,11,.3);border-top-color:var(--yellow);border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0;}
+@keyframes sp{to{transform:rotate(360deg)}}
+.errmsg{margin-top:10px;padding:9px 12px;background:#fef2f2;border:1px solid #fecaca;color:var(--danger);font-size:11px;font-weight:600;border-radius:6px;display:none;}
+.errmsg.on{display:block;}
+
+/* ── RESULTS ──────────────────────────────────── */
+.rcard{display:none;}
+.rcard.on{display:block;}
+.chtabs{display:flex;flex-wrap:wrap;border-bottom:2px solid var(--border);margin:-20px -20px 16px;}
+.chtab{padding:11px 15px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;transition:all .2s;margin-bottom:-2px;}
+.chtab:hover{color:var(--blue);}
+.chtab.on{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-xlight);}
+.chp{display:none;}
+.chp.on{display:block;}
+.rf{margin-bottom:11px;}
+.rf textarea{font-size:12px;line-height:1.55;}
+.chin{font-size:10px;font-weight:600;color:var(--text3);text-align:right;margin-top:2px;}
+.chin.warn{color:var(--warn);}
+.btn-q{width:100%;padding:12px;margin-top:10px;background:var(--yellow);color:var(--blue);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px rgba(250,239,11,.35);}
+.btn-q:hover{background:var(--yellow-dk);transform:translateY(-1px);}
+.btn-q.update{background:var(--cel);color:#fff;box-shadow:0 3px 10px rgba(41,164,222,.3);}
+
+/* ── SIDEBAR ──────────────────────────────────── */
+.qcol{position:sticky;top:78px;}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;box-shadow:var(--sh);margin-bottom:12px;}
+.s-title{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.s-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.qbadge{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:var(--yellow);font-size:11px;font-weight:800;min-width:22px;height:22px;border-radius:11px;padding:0 6px;}
+.qsub{font-size:10px;color:var(--text3);margin-bottom:10px;font-weight:500;}
+.qlist{max-height:260px;overflow-y:auto;margin-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.qitem{display:flex;align-items:flex-start;gap:8px;padding:9px 10px;background:#fafbff;border:1px solid var(--border);border-left:3px solid var(--cel);border-radius:6px;margin-bottom:5px;cursor:pointer;transition:all .2s;}
+.qitem:hover{border-left-color:var(--blue);background:var(--blue-xlight);}
+.qitem.editing{border-left-color:var(--yellow);background:#fffde7;border-color:var(--yellow-dk);}
+.qi-info{flex:1;min-width:0;}
+.qi-name{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.qi-cat{font-size:9px;color:var(--text3);margin-top:2px;}
+.qi-sku{font-size:9px;color:var(--cel);font-weight:700;margin-top:1px;}
+.qi-actions{display:flex;gap:4px;flex-shrink:0;}
+.btn-qi{background:none;border:none;cursor:pointer;padding:2px 4px;border-radius:4px;font-size:13px;color:var(--text3);transition:all .2s;}
+.btn-qi:hover.edit{color:var(--blue);background:var(--blue-xlight);}
+.btn-qi:hover.del{color:var(--danger);background:#fef2f2;}
+.eq{text-align:center;padding:20px 10px;color:var(--text3);font-size:11px;border:2px dashed var(--border);border-radius:8px;}
+.eq-ic{font-size:26px;margin-bottom:5px;opacity:.3;}
+.exps{display:flex;flex-direction:column;gap:6px;}
+.btn-ex{width:100%;padding:9px 11px;border:1.5px solid var(--border);background:#fff;color:var(--text2);border-radius:7px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;}
+.btn-ex:hover:not(:disabled){border-color:var(--blue);color:var(--blue);background:var(--blue-xlight);}
+.btn-ex:disabled{opacity:.35;cursor:not-allowed;}
+.btn-ex.primary{background:var(--blue);color:var(--yellow);border-color:var(--blue);}
+.btn-ex.primary:hover:not(:disabled){background:var(--blue-mid);}
+.btn-clr{width:100%;padding:7px;border:1px solid var(--border);background:transparent;color:var(--text3);border-radius:6px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:3px;}
+.btn-clr:hover{border-color:var(--danger);color:var(--danger);}
+
+/* API KEY settings */
+.api-section{margin-top:4px;}
+.api-toggle-btn{width:100%;padding:8px;background:transparent;border:1px dashed var(--border);border-radius:6px;color:var(--text3);font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.api-toggle-btn:hover{border-color:var(--blue);color:var(--blue);}
+.api-box{display:none;margin-top:8px;}
+.api-box.on{display:block;}
+.api-box label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:5px;}
+.api-box input{font-size:11px;padding:8px 10px;}
+.api-hint{font-size:9px;color:var(--text3);margin-top:4px;line-height:1.4;}
+
+/* Session badge */
+.sess-badge{display:inline-flex;align-items:center;gap:5px;background:#f0fdf7;border:1px solid #a7f3d0;border-radius:20px;padding:3px 9px;font-size:9px;font-weight:700;color:var(--success);letter-spacing:1px;text-transform:uppercase;}
+.sess-dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+@media(max-width:960px){.page{grid-template-columns:1fr;}.qcol{position:static;}.ch-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.g2,.g3,.ch-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a class="logo" href="#">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="6" fill="#001389"/>
+      <path d="M18 6L5 16.5h3.5V29H16v-7h4v7h7.5V16.5H31L18 6z" fill="#FAEF0B"/>
+      <circle cx="18" cy="13" r="3" fill="#29A4DE"/>
+    </svg>
+    <div>
+      <div class="logo-name">PINTULAC</div>
+      <div class="logo-tag">tu amigo experto</div>
+    </div>
+  </a>
+  <div class="tb-sep"></div>
+  <div class="tb-info">
+    <h1>Generador de Contenido Pro</h1>
+    <p>Multicanal · PDF &amp; Imagen · Magento 2 · Historial de sesión</p>
+  </div>
+</nav>
+
+<div class="page">
+<div><!-- LEFT -->
+
+  <!-- STEP 1: CATEGORY -->
+  <div class="card">
+    <div class="shdr"><span class="sn">1</span><span class="st">Categoría y SKU</span></div>
+    <div class="g3" style="margin-bottom:11px;">
+      <div class="f">
+        <label class="lbl">Categoría <span class="req">*</span></label>
+        <select id="categoria" onchange="filtrarSub()"><option value="">— Seleccionar —</option></select>
+      </div>
+      <div class="f">
+        <label class="lbl">Sublínea</label>
+        <select id="sublinea" disabled onchange="filtrarLin()"><option value="">— Seleccionar —</option></select>
+      </div>
+      <div class="f">
+        <label class="lbl">Línea</label>
+        <select id="linea" disabled><option value="">— Seleccionar —</option></select>
+      </div>
+    </div>
+    <div class="f">
+      <label class="lbl">SKU / Código de producto</label>
+      <input type="text" id="sku" placeholder="Ej: PLT-ROD-9PLG">
+    </div>
+  </div>
+
+  <!-- STEP 2: INPUT MODE -->
+  <div class="card">
+    <div class="shdr"><span class="sn">2</span><span class="st">Información del Producto</span></div>
+    <div class="mode-bar">
+      <button class="mopt on" id="tPDF" onclick="setMode('pdf')">📄 PDF</button>
+      <button class="mopt" id="tImg" onclick="setMode('img')">🖼️ Imagen</button>
+      <button class="mopt" id="tMan" onclick="setMode('manual')">✏️ Manual</button>
+    </div>
+
+    <!-- PDF -->
+    <div id="secPDF">
+      <div class="dz" id="dzPDF" ondragover="dzOver(event,'dzPDF')" ondragleave="dzLeave('dzPDF')" ondrop="dzDrop(event,'pdf')" onclick="document.getElementById('pdfIn').click()">
+        <input type="file" id="pdfIn" accept=".pdf" onchange="fileSel(event,'pdf')" style="display:none">
+        <div class="dz-ic">📄</div>
+        <div class="dz-tx" id="dzPDFtx">Arrastra la ficha técnica aquí o haz clic</div>
+        <div class="dz-sb" id="dzPDFsb">Acepta PDF · La IA extraerá toda la información</div>
+      </div>
+    </div>
+
+    <!-- IMAGE -->
+    <div id="secImg" style="display:none">
+      <div class="dz" id="dzIMG" ondragover="dzOver(event,'dzIMG')" ondragleave="dzLeave('dzIMG')" ondrop="dzDrop(event,'img')" onclick="document.getElementById('imgIn').click()">
+        <input type="file" id="imgIn" accept="image/*" onchange="fileSel(event,'img')" style="display:none">
+        <div class="dz-ic">🖼️</div>
+        <div class="dz-tx" id="dzIMGtx">Arrastra la imagen del producto aquí o haz clic</div>
+        <div class="dz-sb" id="dzIMGsb">PNG, JPG, WEBP · La IA analizará la imagen y pre-llenará el formulario</div>
+      </div>
+      <div class="img-preview" id="imgPreview"><img id="imgPreviewEl" src="" alt="Vista previa"></div>
+      <div style="margin-top:12px;padding:10px 12px;background:var(--cel-light);border:1px solid var(--cel);border-radius:7px;">
+        <p style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:6px;letter-spacing:1px;text-transform:uppercase;">Datos adicionales (opcional)</p>
+        <div class="g2">
+          <div class="f"><label class="lbl">Nombre / Título que conoces</label><input type="text" id="img_nombre" placeholder="Ej: Rodillo de pintura 9 pulgadas"></div>
+          <div class="f"><label class="lbl">Marca (si la conoces)</label><input type="text" id="img_marca" placeholder="Ej: Pintulac, Bosch..."></div>
+          <div class="f gf"><label class="lbl">Cualquier dato adicional</label><input type="text" id="img_extra" placeholder="Ej: 220V, 9 pulgadas, pack x2, para interiores..."></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MANUAL -->
+    <div id="secMan" style="display:none">
+      <div class="g2">
+        <div class="f"><label class="lbl">Nombre del producto <span class="req">*</span></label><input type="text" id="nombre" placeholder="Ej: Rodillo de microfibra 9 pulgadas"></div>
+        <div class="f"><label class="lbl">Marca</label><input type="text" id="marca" placeholder="Ej: Pintulac, Bosch..."></div>
+        <div class="f"><label class="lbl">Modelo / Referencia</label><input type="text" id="modelo" placeholder="Ej: PRO-9, RD-200..."></div>
+        <div class="f"><label class="lbl">Medidas / Dimensiones</label><input type="text" id="medidas" placeholder="Ej: 9 pulgadas, 220V, 1HP..."></div>
+        <div class="f"><label class="lbl">Material / Composición</label><input type="text" id="material" placeholder="Ej: Microfibra, acero inox..."></div>
+        <div class="f"><label class="lbl">Compatibilidad</label><input type="text" id="compat" placeholder="Ej: Compatible con mango telescópico..."></div>
+        <div class="f"><label class="lbl">Presentación</label><input type="text" id="pres" placeholder="Ej: 1 pieza, Pack x2, 1 galón..."></div>
+        <div class="f"><label class="lbl">Características <span class="hint">(comas)</span></label><input type="text" id="feats" placeholder="Ej: Lavable, sin pelusa, alta durabilidad"></div>
+        <div class="f gf"><label class="lbl">Usos y aplicaciones</label><textarea id="usos" placeholder="Ej: Ideal para aplicar látex en paredes interiores..."></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: CHANNELS -->
+  <div class="card">
+    <div class="shdr"><span class="sn">3</span><span class="st">Canales a Generar</span></div>
+    <div class="ch-all-row">
+      <span>Selecciona uno o varios canales</span>
+      <button class="btn-sel-all" onclick="toggleAll()">Seleccionar todos</button>
+    </div>
+    <div class="ch-grid">
+      <label class="ch-chip on" id="chip-magento">
+        <input type="checkbox" value="magento" checked onchange="syncChip(this)">
+        <span class="ch-icon">🏪</span>
+        <div class="ch-info"><div class="ch-name">Magento 2</div><div class="ch-desc">CSV para importación masiva</div></div>
+        <div class="ch-check"></div>
+      </label>
+      <label class="ch-chip on" id="chip-ml">
+        <input type="checkbox" value="ml" checked onchange="syncChip(this)">
+        <span class="ch-icon">🛒</span>
+        <div class="ch-info"><div class="ch-name">Mercado Libre</div><div class="ch-desc">Título + descripción ML</div></div>
+        <div class="ch-check"></div>
+      </label>
+      <label class="ch-chip on" id="chip-b2c">
+        <input type="checkbox" value="b2c" checked onchange="syncChip(this)">
+        <span class="ch-icon">🌐</span>
+        <div class="ch-info"><div class="ch-name">Web B2C</div><div class="ch-desc">Consumidor final · SEO</div></div>
+        <div class="ch-check"></div>
+      </label>
+      <label class="ch-chip on" id="chip-b2b">
+        <input type="checkbox" value="b2b" checked onchange="syncChip(this)">
+        <span class="ch-icon">🏭</span>
+        <div class="ch-info"><div class="ch-name">Web B2B</div><div class="ch-desc">Empresas · técnico-comercial</div></div>
+        <div class="ch-check"></div>
+      </label>
+      <label class="ch-chip on" id="chip-pim">
+        <input type="checkbox" value="pim" checked onchange="syncChip(this)">
+        <span class="ch-icon">🗄️</span>
+        <div class="ch-info"><div class="ch-name">PIM Interno</div><div class="ch-desc">Catálogo interno · neutral</div></div>
+        <div class="ch-check"></div>
+      </label>
+      <label class="ch-chip on" id="chip-mkt">
+        <input type="checkbox" value="mkt" checked onchange="syncChip(this)">
+        <span class="ch-icon">📦</span>
+        <div class="ch-info"><div class="ch-name">Marketplace Local</div><div class="ch-desc">OLX, DeCompras y otros</div></div>
+        <div class="ch-check"></div>
+      </label>
+    </div>
+  </div>
+
+  <!-- STEP 4: GENERATE -->
+  <div class="card">
+    <div class="shdr"><span class="sn">4</span><span class="st">Generar</span></div>
+    <div class="banner">
+      <span style="font-size:16px">⚡</span>
+      <p>Se generará contenido solo para los <strong>canales seleccionados</strong>. Puedes revisar y editar cada campo antes de agregar a la cola.</p>
+    </div>
+    <button class="btn-gen" id="btnGen" onclick="generar()">
+      <span id="btnTxt">Generar contenido</span>
+    </button>
+    <div class="errmsg" id="errMsg"></div>
+  </div>
+
+  <!-- STEP 5: RESULTS -->
+  <div class="card rcard" id="rcard">
+    <div class="shdr"><span class="sn">5</span><span class="st">Revisar y Editar</span></div>
+    <div class="chtabs" id="resTabs"></div>
+    <div id="resChannels"></div>
+    <button class="btn-q" id="btnQ" onclick="queueAction()">＋ Agregar a la cola</button>
+  </div>
+
+</div><!-- end left -->
+
+<!-- SIDEBAR -->
+<div class="qcol">
+  <div class="sc">
+    <div class="s-title"><span class="qbadge" id="qCount">0</span>Cola de Exportación</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <p class="qsub" id="qSub">Agrega productos para exportar en lote.</p>
+      <span class="sess-badge"><span class="sess-dot"></span>Sesión activa</span>
+    </div>
+    <div class="qlist" id="qList">
+      <div class="eq"><div class="eq-ic">📋</div>Aún no hay productos.<br>Genera y agrega aquí.</div>
+    </div>
+    <div class="exps">
+      <button class="btn-ex primary" id="bCSV" onclick="expCSV()" disabled>📊 Exportar CSV Magento 2</button>
+      <button class="btn-ex" id="bML" onclick="expML()" disabled>🛒 Exportar Mercado Libre</button>
+      <button class="btn-ex" id="bB2C" onclick="expB2C()" disabled>🌐 Exportar Web B2C</button>
+      <button class="btn-ex" id="bAll" onclick="expAll()" disabled>📦 Exportar Todo (.json)</button>
+      <button class="btn-clr" onclick="clearQ()">🗑 Limpiar cola</button>
+    </div>
+  </div>
+
+  <!-- API KEY -->
+  <div class="sc api-section">
+    <div class="s-title">🔑 API Key</div>
+    <div id="apiBox">
+      <label style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);display:block;margin-bottom:5px;">Anthropic API Key <span style="color:var(--danger)">*</span></label>
+      <input type="password" id="apiKey" placeholder="sk-ant-api03-..." style="font-size:11px;padding:8px 10px;">
+      <p class="api-hint" style="margin-top:6px;">Necesaria para usar la herramienta. Obtén tu clave en <strong>console.anthropic.com</strong>. No se guarda en ningún servidor.</p>
+      <div id="apiStatus" style="display:none;margin-top:6px;padding:6px 10px;border-radius:5px;font-size:10px;font-weight:700;"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end page -->
+
+<script>
+// ─── CATEGORY DATA ────────────────────────────────────────────────────
+const D=[["ACABADOS Y CONSTRUCCION","Aditivos","Morteros"],["ACABADOS Y CONSTRUCCION","Cementos","Morteros"],["ACABADOS Y CONSTRUCCION","Ceramica","Pisos"],["ACABADOS Y CONSTRUCCION","Complementos","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Complementos","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Complementos","Pisos"],["ACABADOS Y CONSTRUCCION","Complementos","Techos y cubiertas"],["ACABADOS Y CONSTRUCCION","Empastes","Morteros"],["ACABADOS Y CONSTRUCCION","Estructura","Construciones livianas"],["ACABADOS Y CONSTRUCCION","fibrocemento","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Herramientas","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Herramientas","Pisos"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes asfalticos","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes en membrana","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes liquidos","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Masillas","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Paneles de aluminio","Revestimientos"],["ACABADOS Y CONSTRUCCION","Pegantes","Morteros"],["ACABADOS Y CONSTRUCCION","Piso bambu","Pisos"],["ACABADOS Y CONSTRUCCION","Piso de ingenieria","Pisos"],["ACABADOS Y CONSTRUCCION","Piso flotante","Pisos"],["ACABADOS Y CONSTRUCCION","Piso madera solida","Pisos"],["ACABADOS Y CONSTRUCCION","Piso PVC","Pisos"],["ACABADOS Y CONSTRUCCION","Piso SPC","Pisos"],["ACABADOS Y CONSTRUCCION","Planchas de granito","Revestimientos"],["ACABADOS Y CONSTRUCCION","Planchas gypsum","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Planchas PVC","Revestimientos"],["ACABADOS Y CONSTRUCCION","Planchas PVC Sintra","Revestimientos"],["ACABADOS Y CONSTRUCCION","Planchas UPVC","Techos y cubiertas"],["ACABADOS Y CONSTRUCCION","Policarbonato","Techos y cubiertas"],["ACABADOS Y CONSTRUCCION","Porcelanato","Pisos"],["ACABADOS Y CONSTRUCCION","Protectores y limpiadores","Pisos"],["ACABADOS Y CONSTRUCCION","Revestimientos de Piedra","Revestimientos"],["ACABADOS Y CONSTRUCCION","Selladores","Morteros"],["ACABADOS Y CONSTRUCCION","Teja espanola PVC","Techos y cubiertas"],["DIVISION AUTOMOTRIZ","A Bateria","Generadores"],["DIVISION AUTOMOTRIZ","Accesorios y repuestos","Generadores"],["DIVISION AUTOMOTRIZ","Accesorios y repuestos","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Accesorios y repuestos","Metalmecanica"],["DIVISION AUTOMOTRIZ","Alineacion y balanceo","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Amoladoras y pulidoras","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Elevadores","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Enderezada y pintura","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Equipos de diagnostico","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Equipos de lubricacion","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Herramientas hidraulicas","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Herramientas manuales","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Herramientas varias","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Lijadoras","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Repuestos","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Sierras","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Sierras","Metalmecanica"],["DIVISION AUTOMOTRIZ","Soportes y ergonomia","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Taladros","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Taladros","Metalmecanica"],["DIVISION AUTOMOTRIZ","Tornos","Metalmecanica"],["ENERGIAS RENOVABLES","Almacenamiento","Accesorios"],["ENERGIAS RENOVABLES","Almacenamiento","Equipos"],["ENERGIAS RENOVABLES","Captación","Accesorios"],["ENERGIAS RENOVABLES","Captación","Equipos"],["ENERGIAS RENOVABLES","Captación","Insumos"],["ENERGIAS RENOVABLES","Conversión","Accesorios"],["ENERGIAS RENOVABLES","Conversión","Equipos"],["FERRETERIA Y HOGAR","Accesorios","Hidrosanitaria"],["FERRETERIA Y HOGAR","Accesorios arte","Arte"],["FERRETERIA Y HOGAR","Accesorios parrillas","Outdoors"],["FERRETERIA Y HOGAR","Accesorios y repuestos","Linea autocare"],["FERRETERIA Y HOGAR","Aditivos","Linea autocare"],["FERRETERIA Y HOGAR","Alambres","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Arte Urbano","Sprays"],["FERRETERIA Y HOGAR","Audio y video","Hogar"],["FERRETERIA Y HOGAR","Banos y griferia","Hidrosanitaria"],["FERRETERIA Y HOGAR","Bastidores","Arte"],["FERRETERIA Y HOGAR","Bebidas","Alimentos y bebidas"],["FERRETERIA Y HOGAR","Bioseguridad","Seguridad Industrial"],["FERRETERIA Y HOGAR","Brochas","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Cables","Material electrico"],["FERRETERIA Y HOGAR","Cadenas","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Calentadores","Outdoors"],["FERRETERIA Y HOGAR","Candados","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Carpas","Outdoors"],["FERRETERIA Y HOGAR","Cerraduras","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Cintas","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Complementos","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Complementos","Hogar"],["FERRETERIA Y HOGAR","Complementos","Seguridad Industrial"],["FERRETERIA Y HOGAR","Complementos","Sprays"],["FERRETERIA Y HOGAR","Complementos de aplicacion","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Complementos tuberia","Hidrosanitaria"],["FERRETERIA Y HOGAR","Coolers","Outdoors"],["FERRETERIA Y HOGAR","Decoracion paredes","Arte"],["FERRETERIA Y HOGAR","Desinfectantes","Limpieza"],["FERRETERIA Y HOGAR","Domotica","Hogar"],["FERRETERIA Y HOGAR","Envases","Envases"],["FERRETERIA Y HOGAR","Equipos de proteccion personal","Seguridad Industrial"],["FERRETERIA Y HOGAR","Espatulas","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Especiales","Sprays"],["FERRETERIA Y HOGAR","Espumas","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Extintores","Seguridad Industrial"],["FERRETERIA Y HOGAR","Extractores","Hogar"],["FERRETERIA Y HOGAR","Herrajes","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Herramientas electricas","Material electrico"],["FERRETERIA Y HOGAR","Herramientas y accesorios","Material electrico"],["FERRETERIA Y HOGAR","Iluminacion","Material electrico"],["FERRETERIA Y HOGAR","Intercomunicadores y timbres","Hogar"],["FERRETERIA Y HOGAR","Juguetes","Hogar"],["FERRETERIA Y HOGAR","Lija de agua","Abrasivos"],["FERRETERIA Y HOGAR","Lijas","Abrasivos"],["FERRETERIA Y HOGAR","Lijas en seco","Abrasivos"],["FERRETERIA Y HOGAR","Lijas velcron","Abrasivos"],["FERRETERIA Y HOGAR","Limpiadores","Limpieza"],["FERRETERIA Y HOGAR","Limpiadores","Linea autocare"],["FERRETERIA Y HOGAR","Maderas","Arte"],["FERRETERIA Y HOGAR","Mantenimiento","Linea autocare"],["FERRETERIA Y HOGAR","Muebles","Hogar"],["FERRETERIA Y HOGAR","Parrillas gas y carbon","Outdoors"],["FERRETERIA Y HOGAR","Pernos y clavos","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Pilas y linternas","Hogar"],["FERRETERIA Y HOGAR","Pinceles","Arte"],["FERRETERIA Y HOGAR","Pinturas y spray","Arte"],["FERRETERIA Y HOGAR","Plantas","Hogar"],["FERRETERIA Y HOGAR","Plasticos","Hogar"],["FERRETERIA Y HOGAR","Proteccion manos","Seguridad Industrial"],["FERRETERIA Y HOGAR","Purificacion agua","Hogar"],["FERRETERIA Y HOGAR","Recipientes","Limpieza"],["FERRETERIA Y HOGAR","Rodillos","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Senalizacion","Seguridad Industrial"],["FERRETERIA Y HOGAR","Silicones","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Snacks","Alimentos y bebidas"],["FERRETERIA Y HOGAR","Sujetadores","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Tuberia PVC","Hidrosanitaria"],["FERRETERIA Y HOGAR","Uso general","Sprays"],["FERRETERIA Y HOGAR","Ventilacion","Hogar"],["MAQUINARIA Y HERRAMIENTAS","Accesorios","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Accesorios","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Accesorios","Sandblasting"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Aspiradoras"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Calentamiento y purificacion"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Generadores"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Hidrolavadoras"],["MAQUINARIA Y HERRAMIENTAS","Aceites","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Aceites","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Apiladores y paleteras","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Brocas","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Calefones a gas","Calentamiento y purificacion"],["MAQUINARIA Y HERRAMIENTAS","Calentador electrico","Calentamiento y purificacion"],["MAQUINARIA Y HERRAMIENTAS","Centrifuga","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Combustion","Hidrolavadoras"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Consumibles soldadoras","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Desmalezadoras","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Discos","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Domesticos","Generadores"],["MAQUINARIA Y HERRAMIENTAS","Electricas","Hidrolavadoras"],["MAQUINARIA Y HERRAMIENTAS","Electricas","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Elevadores","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Equipos","Aspiradoras"],["MAQUINARIA Y HERRAMIENTAS","Equipos","Sandblasting"],["MAQUINARIA Y HERRAMIENTAS","Equipos de construccion","Equipos de construccion"],["MAQUINARIA Y HERRAMIENTAS","Fresas","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Gratas","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Herramientas electricas","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Herramientas manuales","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Herramientas neumaticas","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Industrial","Generadores"],["MAQUINARIA Y HERRAMIENTAS","Montacargas","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Motobomba","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Motosoldadoras","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Periferica","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Pistolas de gravedad","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Poda","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Riego","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Silenciosos","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Sumergible","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Tornillo electrico","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Tractores","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Transmision Directa","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Transmision por banda","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Usos especiales","Bombas de Agua"],["PINTURA","Acabados","Automotriz"],["PINTURA","Accesorios","Airless"],["PINTURA","Accesorios y repuestos","Madera"],["PINTURA","Aceites y preservantes","Madera"],["PINTURA","Aditivos y complementos","Plasticos reforzados"],["PINTURA","Aguarras","Reactivos y solventes"],["PINTURA","Altas temperaturas","Usos especiales"],["PINTURA","Anticorrosivos","Metalmecanica"],["PINTURA","Barniz","Automotriz"],["PINTURA","Boquillas","Airless"],["PINTURA","Canchas deportivas","Usos especiales"],["PINTURA","Cartas de colores","Catalogos"],["PINTURA","Caucho de silicon","Industrial"],["PINTURA","Colorantes y tintes","Madera"],["PINTURA","Complementos","Automotriz"],["PINTURA","Complementos","Madera"],["PINTURA","Complementos","Metalmecanica"],["PINTURA","Complementos","Preparadores de superficie"],["PINTURA","Complementos","Vial"],["PINTURA","Elastomericos","Arquitectonica"],["PINTURA","Electrostatica","Metalmecanica"],["PINTURA","Epoxicos","Industrial"],["PINTURA","Equipos","Airless"],["PINTURA","Esmaltes","Metalmecanica"],["PINTURA","Estucos","Alta decoracion"],["PINTURA","Fibra","Plasticos reforzados"],["PINTURA","Fijadores","Preparadores de superficie"],["PINTURA","Fondos","Preparadores de superficie"],["PINTURA","Granos","Agregados minerales"],["PINTURA","Herramientas","Madera"],["PINTURA","Herramientas","Metalmecanica"],["PINTURA","Horneables","Industrial"],["PINTURA","Impermeabilizantes","Arquitectonica"],["PINTURA","Imprimantes","Arquitectonica"],["PINTURA","Interiores/exteriores","Arquitectonica"],["PINTURA","Iridiscentes metalizados","Alta decoracion"],["PINTURA","Lacas y barnices","Madera"],["PINTURA","Limpiadores","Preparadores de superficie"],["PINTURA","Mangueras","Airless"],["PINTURA","Masillas","Preparadores de superficie"],["PINTURA","Metalicos","Envases"],["PINTURA","Microcemento","Alta decoracion"],["PINTURA","Minerales","Agregados minerales"],["PINTURA","Pegamentos","Madera"],["PINTURA","Pigmentos","Agregados minerales"],["PINTURA","Pintura nitro","Automotriz"],["PINTURA","Pintura poliester","Automotriz"],["PINTURA","Pintura poliuretano","Automotriz"],["PINTURA","Pintura sintetica","Arquitectonica"],["PINTURA","Pintura sintetica","Automotriz"],["PINTURA","Pistolas","Airless"],["PINTURA","Plasticos","Envases"],["PINTURA","Poliuretanos","Industrial"],["PINTURA","Polvos","Agregados minerales"],["PINTURA","Preparados","Arquitectonica"],["PINTURA","Primers","Preparadores de superficie"],["PINTURA","Pulimento","Automotriz"],["PINTURA","Reactivos","Reactivos y solventes"],["PINTURA","Recubrimientos para baldes","Usos especiales"],["PINTURA","Repuestos","Airless"],["PINTURA","Resinas","Plasticos reforzados"],["PINTURA","Resinas epoxicas","Industrial"],["PINTURA","Rusticos difuminados","Alta decoracion"],["PINTURA","Rusticos texturados","Alta decoracion"],["PINTURA","Satinados","Arquitectonica"],["PINTURA","Senalizacion","Vial"],["PINTURA","Techos","Usos especiales"],["PINTURA","Thinner acrilico","Reactivos y solventes"],["PINTURA","Thinner caucho clorado","Reactivos y solventes"],["PINTURA","Thinner epoxico","Reactivos y solventes"],["PINTURA","Thinner laca","Reactivos y solventes"],["PINTURA","Thinner poliuretano","Reactivos y solventes"],["PINTURA","Tintes","Industrial"],["PINTURA","Velados y tamponados","Alta decoracion"]];
+
+const u=a=>[...new Set(a)].sort();
+const sc=document.getElementById('categoria');
+u(D.map(r=>r[0])).forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;sc.appendChild(o);});
+function filtrarSub(){const c=document.getElementById('categoria').value,s=document.getElementById('sublinea'),l=document.getElementById('linea');s.innerHTML='<option value="">— Seleccionar —</option>';l.innerHTML='<option value="">— Seleccionar —</option>';l.disabled=true;if(!c){s.disabled=true;return;}u(D.filter(r=>r[0]===c).map(r=>r[1])).forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});s.disabled=false;}
+function filtrarLin(){const c=document.getElementById('categoria').value,s=document.getElementById('sublinea').value,l=document.getElementById('linea');l.innerHTML='<option value="">— Seleccionar —</option>';if(!s){l.disabled=true;return;}u(D.filter(r=>r[0]===c&&r[1]===s).map(r=>r[2])).forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;l.appendChild(o);});l.disabled=false;}
+
+// ─── MODE ─────────────────────────────────────────────────────────────
+let mode='pdf', pdf64=null, img64=null, imgType=null;
+function setMode(m){
+  mode=m;
+  document.getElementById('secPDF').style.display=m==='pdf'?'block':'none';
+  document.getElementById('secImg').style.display=m==='img'?'block':'none';
+  document.getElementById('secMan').style.display=m==='manual'?'block':'none';
+  ['tPDF','tImg','tMan'].forEach(id=>document.getElementById(id).className='mopt'+(id==='t'+m.charAt(0).toUpperCase()+m.slice(1)?' on':''));
+}
+
+// ─── FILE HANDLING ─────────────────────────────────────────────────────
+function dzOver(e,id){e.preventDefault();document.getElementById(id).classList.add('over');}
+function dzLeave(id){document.getElementById(id).classList.remove('over');}
+function dzDrop(e,type){e.preventDefault();dzLeave(type==='pdf'?'dzPDF':'dzIMG');const f=e.dataTransfer.files[0];if(f)handleFile(f,type);}
+function fileSel(e,type){if(e.target.files[0])handleFile(e.target.files[0],type);}
+function handleFile(f,type){
+  const r=new FileReader();
+  r.onload=()=>{
+    if(type==='pdf'){pdf64=r.result.split(',')[1];const dz=document.getElementById('dzPDF');dz.classList.add('loaded');document.getElementById('dzPDFtx').textContent='✅ '+f.name;document.getElementById('dzPDFsb').textContent=(f.size/1024).toFixed(0)+' KB · Listo para procesar';}
+    else{img64=r.result.split(',')[1];imgType=f.type;const dz=document.getElementById('dzIMG');dz.classList.add('loaded');document.getElementById('dzIMGtx').textContent='✅ '+f.name;document.getElementById('dzIMGsb').textContent=(f.size/1024).toFixed(0)+' KB · La IA analizará esta imagen';document.getElementById('imgPreviewEl').src=r.result;document.getElementById('imgPreview').classList.add('on');}
+  };
+  r.readAsDataURL(f);
+}
+
+// ─── CHANNEL CHIPS ────────────────────────────────────────────────────
+const CH_CFG={
+  magento:{label:'Magento 2',fields:[{id:'r-m-name',label:'name',max:100,rows:2},{id:'r-m-short',label:'short_description',max:400,rows:3},{id:'r-m-desc',label:'description (HTML)',max:9000,rows:9},{id:'r-m-mt',label:'meta_title',max:60,rows:2},{id:'r-m-md',label:'meta_description',max:160,rows:2},{id:'r-m-mk',label:'meta_keyword',max:500,rows:2}],jsonKey:'magento'},
+  ml:{label:'Mercado Libre',fields:[{id:'r-ml-t',label:'Título',max:60,rows:2},{id:'r-ml-d',label:'Descripción (texto plano · secciones en MAYÚSCULAS)',max:4000,rows:12}],jsonKey:'mercadolibre'},
+  b2c:{label:'Web B2C',fields:[{id:'r-b2c-s',label:'Descripción corta',max:350,rows:3},{id:'r-b2c-l',label:'Descripción larga (HTML)',max:6000,rows:9},{id:'r-b2c-k',label:'Keywords SEO',max:500,rows:2}],jsonKey:'b2c'},
+  b2b:{label:'Web B2B',fields:[{id:'r-b2b-s',label:'Descripción corta técnica',max:350,rows:3},{id:'r-b2b-l',label:'Descripción larga (HTML)',max:6000,rows:9},{id:'r-b2b-k',label:'Keywords SEO B2B',max:500,rows:2}],jsonKey:'b2b'},
+  pim:{label:'PIM Interno',fields:[{id:'r-pim-n',label:'Nombre normalizado',max:200,rows:2},{id:'r-pim-s',label:'Descripción corta',max:300,rows:3},{id:'r-pim-l',label:'Descripción larga (texto plano)',max:3000,rows:7},{id:'r-pim-a',label:'Atributos técnicos (Atributo: Valor)',max:1500,rows:6}],jsonKey:'pim'},
+  mkt:{label:'Marketplace Local',fields:[{id:'r-mkt-t',label:'Título',max:70,rows:2},{id:'r-mkt-d',label:'Descripción (texto plano)',max:4000,rows:10}],jsonKey:'mkt'}
+};
+
+function syncChip(cb){document.getElementById('chip-'+cb.value).classList.toggle('on',cb.checked);}
+let allOn=true;
+function toggleAll(){
+  allOn=!allOn;
+  document.querySelectorAll('.ch-chip input').forEach(cb=>{cb.checked=allOn;syncChip(cb);});
+  document.querySelector('.btn-sel-all').textContent=allOn?'Deseleccionar todos':'Seleccionar todos';
+}
+function getSelectedChannels(){return [...document.querySelectorAll('.ch-chip input:checked')].map(cb=>cb.value);}
+
+// ─── BUILD RESULT FIELDS ──────────────────────────────────────────────
+function buildResultUI(channels){
+  const tabs=document.getElementById('resTabs'),panels=document.getElementById('resChannels');
+  tabs.innerHTML='';panels.innerHTML='';
+  channels.forEach((ch,i)=>{
+    const cfg=CH_CFG[ch];
+    // tab
+    const btn=document.createElement('button');
+    btn.className='chtab'+(i===0?' on':'');btn.textContent=cfg.label;
+    btn.onclick=()=>{document.querySelectorAll('.chtab').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.chp').forEach(p=>p.classList.remove('on'));btn.classList.add('on');document.getElementById('chp-'+ch).classList.add('on');};
+    tabs.appendChild(btn);
+    // panel
+    const div=document.createElement('div');div.className='chp'+(i===0?' on':'');div.id='chp-'+ch;
+    div.innerHTML=cfg.fields.map(f=>`<div class="rf"><label class="lbl">${f.label}${f.max<=160?` <span class="hint">· máx ${f.max} chars</span>`:''}</label><textarea id="${f.id}" rows="${f.rows}" oninput="cc(this,'c-${f.id}',${f.max})"></textarea><div class="chin" id="c-${f.id}"></div></div>`).join('');
+    panels.appendChild(div);
+  });
+}
+function cc(ta,cid,max){const l=ta.value.length,el=document.getElementById(cid);if(!el)return;el.textContent=`${l} / ${max}`;el.className='chin'+(l>max?' warn':'');}
+
+// ─── API KEY VALIDATION ───────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('apiKey');
+  if(inp){inp.addEventListener('input',function(){
+    const v=this.value.trim(),st=document.getElementById('apiStatus');
+    if(!st)return;
+    if(!v){st.style.display='none';return;}
+    if(v.startsWith('sk-ant-')){st.style.display='block';st.style.background='#f0fdf7';st.style.color='var(--success)';st.style.border='1px solid #a7f3d0';st.textContent='✅ Clave válida · Lista para usar';}
+    else{st.style.display='block';st.style.background='#fef2f2';st.style.color='var(--danger)';st.style.border='1px solid #fecaca';st.textContent='⚠️ Formato incorrecto · Debe empezar con sk-ant-';}
+  });}
+});
+
+// ─── QUEUE (localStorage) ─────────────────────────────────────────────
+let Q=[], editIdx=-1;
+try{const s=localStorage.getItem('pintulac_queue');if(s)Q=JSON.parse(s);}catch(e){}
+
+function saveQ(){try{localStorage.setItem('pintulac_queue',JSON.stringify(Q));}catch(e){}}
+
+function queueAction(){
+  const channels=getSelectedChannels();
+  if(!channels.length){showErr('Selecciona al menos un canal.');return;}
+  const entry={id:editIdx>=0?Q[editIdx].id:Date.now(),sku:gv('sku'),nombre:gv('r-m-name')||gv('r-ml-t')||gv('nombre')||'Producto',cat:[document.getElementById('categoria').value,document.getElementById('sublinea').value].filter(Boolean).join(' › '),channels};
+  channels.forEach(ch=>{const cfg=CH_CFG[ch];entry[ch]={};cfg.fields.forEach(f=>entry[ch][f.id]=gv(f.id));});
+  if(editIdx>=0){Q[editIdx]=entry;editIdx=-1;document.getElementById('btnQ').className='btn-q';document.getElementById('btnQ').textContent='＋ Agregar a la cola';}
+  else{Q.push(entry);}
+  saveQ();renderQ();resetForm();
+  const b=document.getElementById('btnQ');b.textContent=editIdx>=0?'✅ Actualizado':'✅ ¡Agregado!';setTimeout(()=>b.textContent='＋ Agregar a la cola',2000);
+}
+
+function editQ(i){
+  editIdx=i;const p=Q[i];
+  // restore category
+  if(p.cat){const parts=p.cat.split(' › ');if(parts[0]){document.getElementById('categoria').value=parts[0];filtrarSub();if(parts[1]){document.getElementById('sublinea').value=parts[1];filtrarLin();}}}
+  if(p.sku)document.getElementById('sku').value=p.sku;
+  // rebuild result UI for this product's channels
+  buildResultUI(p.channels||getSelectedChannels());
+  // fill fields
+  p.channels.forEach(ch=>{const cfg=CH_CFG[ch];cfg.fields.forEach(f=>{const e=document.getElementById(f.id);if(e&&p[ch]){e.value=p[ch][f.id]||'';e.dispatchEvent(new Event('input'));}});});
+  document.getElementById('rcard').classList.add('on');
+  document.getElementById('btnQ').className='btn-q update';
+  document.getElementById('btnQ').textContent='💾 Guardar cambios en la cola';
+  document.getElementById('rcard').scrollIntoView({behavior:'smooth',block:'start'});
+  renderQ();
+}
+function delQ(i,e){e.stopPropagation();if(editIdx===i){editIdx=-1;document.getElementById('rcard').classList.remove('on');}Q.splice(i,1);saveQ();renderQ();}
+
+function renderQ(){
+  const n=Q.length;
+  document.getElementById('qCount').textContent=n;
+  document.getElementById('qSub').textContent=n?`${n} producto${n>1?'s':''} listo${n>1?'s':''} para exportar.`:'Agrega productos para exportar en lote.';
+  ['bCSV','bML','bB2C','bAll'].forEach(id=>document.getElementById(id).disabled=!n);
+  document.getElementById('qList').innerHTML=!n
+    ?'<div class="eq"><div class="eq-ic">📋</div>Aún no hay productos.<br>Genera y agrega aquí.</div>'
+    :Q.map((p,i)=>`<div class="qitem${editIdx===i?' editing':''}" onclick="editQ(${i})"><div class="qi-info"><div class="qi-name">${p.nombre}</div><div class="qi-cat">${p.cat||''}</div>${p.sku?`<div class="qi-sku">${p.sku}</div>`:''}</div><div class="qi-actions"><button class="btn-qi edit" title="Editar" onclick="editQ(${i});event.stopPropagation()">✏️</button><button class="btn-qi del" title="Eliminar" onclick="delQ(${i},event)">×</button></div></div>`).join('');
+}
+renderQ();
+
+function clearQ(){if(!Q.length||!confirm('¿Limpiar toda la cola? Esta acción no se puede deshacer.'))return;Q=[];editIdx=-1;saveQ();renderQ();}
+
+const gv=id=>{const e=document.getElementById(id);return e?e.value:'';};
+
+function resetForm(){
+  pdf64=null;img64=null;imgType=null;
+  ['dzPDF','dzIMG'].forEach(id=>{const dz=document.getElementById(id);if(dz)dz.classList.remove('loaded');});
+  document.getElementById('dzPDFtx').textContent='Arrastra la ficha técnica aquí o haz clic';
+  document.getElementById('dzPDFsb').textContent='Acepta PDF · La IA extraerá toda la información';
+  document.getElementById('dzIMGtx').textContent='Arrastra la imagen del producto aquí o haz clic';
+  document.getElementById('dzIMGsb').textContent='PNG, JPG, WEBP · La IA analizará la imagen';
+  document.getElementById('imgPreview').classList.remove('on');
+  document.getElementById('imgPreviewEl').src='';
+  document.getElementById('pdfIn').value='';document.getElementById('imgIn').value='';
+  ['nombre','marca','modelo','medidas','material','compat','pres','feats','usos','sku','img_nombre','img_marca','img_extra'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  if(editIdx<0)document.getElementById('rcard').classList.remove('on');
+}
+
+// ─── EXPORTS ──────────────────────────────────────────────────────────
+function esc(v){if(!v)return'';v=String(v).replace(/"/g,'""');if(/[,"\n\r]/.test(v))v=`"${v}"`;return v;}
+function dl(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+content],{type}));a.download=name;a.click();}
+function ts(){return new Date().toISOString().slice(0,10);}
+
+function expCSV(){
+  const cols=['sku','name','short_description','description','meta_title','meta_keyword','meta_description'];
+  const rows=[cols.join(','),...Q.filter(p=>p.magento).map(p=>{const m=p.magento||{};return[esc(p.sku),esc(m['r-m-name']),esc(m['r-m-short']),esc(m['r-m-desc']),esc(m['r-m-mt']),esc(m['r-m-mk']),esc(m['r-m-md'])].join(',');})];
+  if(rows.length<2){alert('No hay productos con contenido de Magento 2 en la cola.');return;}
+  dl('pintulac_magento2_'+ts()+'.csv',rows.join('\n'),'text/csv');
+}
+function expML(){
+  const items=Q.filter(p=>p.ml);
+  if(!items.length){alert('No hay productos con contenido de Mercado Libre en la cola.');return;}
+  const txt=items.map((p,i)=>`${'═'.repeat(56)}\nPRODUCTO ${i+1}${p.sku?' · '+p.sku:''}: ${p.nombre}\n${'═'.repeat(56)}\nTÍTULO:\n${p.ml['r-ml-t']||''}\n\nDESCRIPCIÓN:\n${p.ml['r-ml-d']||''}\n`).join('\n\n');
+  dl('pintulac_mercadolibre_'+ts()+'.txt',txt,'text/plain');
+}
+function expB2C(){
+  const items=Q.filter(p=>p.b2c);
+  if(!items.length){alert('No hay productos con contenido B2C en la cola.');return;}
+  const txt=items.map((p,i)=>`${'═'.repeat(56)}\nPRODUCTO ${i+1}${p.sku?' · '+p.sku:''}: ${p.nombre}\n${'═'.repeat(56)}\nDESCRIPCIÓN CORTA:\n${p.b2c['r-b2c-s']||''}\n\nDESCRIPCIÓN LARGA:\n${p.b2c['r-b2c-l']||''}\n\nKEYWORDS:\n${p.b2c['r-b2c-k']||''}\n`).join('\n\n');
+  dl('pintulac_b2c_'+ts()+'.txt',txt,'text/plain');
+}
+function expAll(){dl('pintulac_todos_canales_'+ts()+'.json',JSON.stringify(Q,null,2),'application/json');}
+
+// ─── GENERATE ─────────────────────────────────────────────────────────
+async function generar(){
+  const cat=document.getElementById('categoria').value;
+  const channels=getSelectedChannels();
+  if(!cat){showErr('Selecciona una categoría primero.');return;}
+  if(!channels.length){showErr('Selecciona al menos un canal para generar.');return;}
+  if(mode==='pdf'&&!pdf64){showErr('Carga un archivo PDF primero.');return;}
+  if(mode==='img'&&!img64){showErr('Carga una imagen del producto primero.');return;}
+  if(mode==='manual'&&!document.getElementById('nombre').value.trim()){showErr('Ingresa al menos el nombre del producto.');return;}
+  const apiKeyVal=document.getElementById('apiKey').value.trim();
+  if(!apiKeyVal){showErr('Ingresa tu API Key de Anthropic en el panel derecho para continuar. Obtenla en console.anthropic.com');document.getElementById('apiKey').focus();return;}
+  hideErr();setLoad(true);
+
+  const sub=gv('sublinea'),lin=gv('linea'),sku=gv('sku');
+  let datosExtra='';
+  if(mode==='manual'){datosExtra=[gv('nombre')&&'Nombre: '+gv('nombre'),gv('marca')&&'Marca: '+gv('marca'),gv('modelo')&&'Modelo: '+gv('modelo'),gv('medidas')&&'Medidas: '+gv('medidas'),gv('material')&&'Material: '+gv('material'),gv('compat')&&'Compatibilidad: '+gv('compat'),gv('pres')&&'Presentación: '+gv('pres'),gv('feats')&&'Características: '+gv('feats'),gv('usos')&&'Usos: '+gv('usos')].filter(Boolean).join('\n');}
+  else if(mode==='img'){datosExtra=[gv('img_nombre')&&'Nombre conocido: '+gv('img_nombre'),gv('img_marca')&&'Marca: '+gv('img_marca'),gv('img_extra')&&'Datos adicionales: '+gv('img_extra')].filter(Boolean).join('\n');}
+
+  // Build JSON schema for selected channels only
+  const chPrompts={
+    magento:`"magento":{"name":"nombre limpio max 100 chars","short_description":"2-3 oraciones texto plano beneficios B2C","description":"HTML <p><ul><li> 280-360 palabras tono B2C","meta_title":"max 60 chars","meta_keyword":"12-15 keywords separadas por coma","meta_description":"max 160 chars"}`,
+    mercadolibre:`"mercadolibre":{"titulo":"max 60 chars Producto+Marca+Espec sin puntuación excesiva","descripcion":"texto plano 230-280 palabras secciones en MAYUSCULAS"}`,
+    b2c:`"b2c":{"descripcion_corta":"1-2 oraciones gancho B2C","descripcion_larga":"HTML <p><ul><li> 260-340 palabras tono cálido","keywords":"10-12 keywords SEO B2C"}`,
+    b2b:`"b2b":{"descripcion_corta":"1-2 oraciones técnicas para empresas","descripcion_larga":"HTML <p><ul><li> 260-340 palabras técnico-comercial","keywords":"10-12 keywords B2B"}`,
+    pim:`"pim":{"nombre_normalizado":"Marca+Producto+EspecPrincipal","descripcion_corta":"1 oración técnica neutral","descripcion_larga":"texto plano 180-240 palabras neutro","atributos":"Atributo: Valor uno por línea"}`,
+    mkt:`"mkt":{"titulo":"max 70 chars","descripcion":"texto plano 210-260 palabras tono Ecuador local"}`
+  };
+
+  const jsonSchema='{'+channels.map(ch=>chPrompts[ch==='ml'?'mercadolibre':ch==='b2c'?'b2c':ch==='b2b'?'b2b':ch==='pim'?'pim':ch==='mkt'?'mkt':'magento']).join(',')+'}';
+
+  const modeInstr=mode==='pdf'?'La ficha técnica completa está en el PDF adjunto. Extrae toda la información disponible.':mode==='img'?`Analiza la imagen del producto adjunta. Extrae nombre, características visibles, materiales, posibles usos y especificaciones que puedas ver. ${datosExtra?'Datos adicionales conocidos:\n'+datosExtra:''}`:`Datos del producto:\n${datosExtra}`;
+
+  const prompt=`Eres experto en contenido de producto para PINTULAC, empresa ecuatoriana líder, slogan "tu amigo experto". Venden pinturas, herramientas, maquinaria y acabados de construcción en Ecuador.
+
+CATEGORÍA: ${cat}${sub?' › '+sub:''}${lin?' › '+lin:''}${sku?'\nSKU: '+sku:''}
+CANALES SOLICITADOS: ${channels.join(', ')}
+
+${modeInstr}
+
+Genera contenido SOLO para los canales solicitados. Tono: cálido/beneficios para B2C, técnico-comercial para B2B, neutral para PIM, directo para marketplaces.
+
+REGLAS: Sin precios, envíos, devoluciones ni contactos. Sin links externos. Solo HTML básico donde se indica. Español Ecuador.
+
+Responde ÚNICAMENTE con este JSON válido, sin backticks, sin texto extra:
+${jsonSchema}`;
+
+  const apiKey=document.getElementById('apiKey').value.trim();
+  const headers={'Content-Type':'application/json','anthropic-version':'2023-06-01'};
+  if(apiKey)headers['x-api-key']=apiKey;
+
+  let msgContent;
+  if(mode==='pdf'&&pdf64){msgContent=[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pdf64}},{type:'text',text:prompt}];}
+  else if(mode==='img'&&img64){msgContent=[{type:'image',source:{type:'base64',media_type:imgType||'image/jpeg',data:img64}},{type:'text',text:prompt}];}
+  else{msgContent=[{type:'text',text:prompt}];}
+
+  try{
+    const res=await fetch('/.netlify/functions/claude-proxy',{method:'POST',headers,body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3500,messages:[{role:'user',content:msgContent}]})});
+    const data=await res.json();
+    if(data.error){showErr('Error API: '+data.error.message);setLoad(false);return;}
+    const raw=(data.content||[]).map(b=>b.text||'').join('');
+    let parsed;
+    try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}
+    catch{showErr('Error al procesar la respuesta. Intenta de nuevo.');setLoad(false);return;}
+
+    // Build result UI for selected channels
+    buildResultUI(channels);
+
+    // Fill fields
+    const keyMap={magento:'magento',ml:'mercadolibre',b2c:'b2c',b2b:'b2b',pim:'pim',mkt:'mkt'};
+    const fieldMap={
+      magento:{'r-m-name':'name','r-m-short':'short_description','r-m-desc':'description','r-m-mt':'meta_title','r-m-mk':'meta_keyword','r-m-md':'meta_description'},
+      ml:{'r-ml-t':'titulo','r-ml-d':'descripcion'},
+      b2c:{'r-b2c-s':'descripcion_corta','r-b2c-l':'descripcion_larga','r-b2c-k':'keywords'},
+      b2b:{'r-b2b-s':'descripcion_corta','r-b2b-l':'descripcion_larga','r-b2b-k':'keywords'},
+      pim:{'r-pim-n':'nombre_normalizado','r-pim-s':'descripcion_corta','r-pim-l':'descripcion_larga','r-pim-a':'atributos'},
+      mkt:{'r-mkt-t':'titulo','r-mkt-d':'descripcion'}
+    };
+
+    channels.forEach(ch=>{
+      const apiKey2=keyMap[ch], src=parsed[apiKey2];
+      if(!src)return;
+      Object.entries(fieldMap[ch]).forEach(([elId,srcKey])=>{const e=document.getElementById(elId);if(e&&src[srcKey]!==undefined){e.value=src[srcKey];e.dispatchEvent(new Event('input'));}});
+    });
+
+    document.getElementById('rcard').classList.add('on');
+    document.getElementById('rcard').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){showErr('Error de conexión. Verifica tu internet e intenta de nuevo.');}
+  finally{setLoad(false);}
+}
+
+function setLoad(v){const b=document.getElementById('btnGen');b.disabled=v;document.getElementById('btnTxt').innerHTML=v?'<span class="spin"></span>Generando contenido...':'Generar contenido';}
+function showErr(m){const e=document.getElementById('errMsg');e.textContent=m;e.classList.add('on');}
+function hideErr(){document.getElementById('errMsg').classList.remove('on');}
+</script>
+</body>
+</html>
