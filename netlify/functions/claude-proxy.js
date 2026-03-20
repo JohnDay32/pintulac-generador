@@ -1,4 +1,5 @@
 exports.handler = async function (event) {
+  // Handle CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
@@ -30,6 +31,7 @@ exports.handler = async function (event) {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
+        "anthropic-beta": "pdfs-2024-09-25",
       },
       body: event.body,
     });
