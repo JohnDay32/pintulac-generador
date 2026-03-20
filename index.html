@@ -608,7 +608,7 @@ ${jsonSchema}`;
   else{msgContent=[{type:'text',text:prompt}];}
 
   try{
-    const res=await fetch('/.netlify/functions/claude-proxy',{method:'POST',headers,body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3500,messages:[{role:'user',content:msgContent}]})});
+    const res=await fetch('/.netlify/functions/claude-proxy',{method:'POST',headers,body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:3500,messages:[{role:'user',content:msgContent}]})});
     const data=await res.json();
     if(data.error){showErr('Error API: '+data.error.message);setLoad(false);return;}
     const raw=(data.content||[]).map(b=>b.text||'').join('');
