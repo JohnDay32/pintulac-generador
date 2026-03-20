@@ -179,6 +179,11 @@ textarea{resize:vertical;min-height:70px;line-height:1.55;}
 .sess-badge{display:inline-flex;align-items:center;gap:5px;background:#f0fdf7;border:1px solid #a7f3d0;border-radius:20px;padding:3px 9px;font-size:9px;font-weight:700;color:var(--success);letter-spacing:1px;text-transform:uppercase;}
 .sess-dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* NAV SWITCHER */
+.mode-switch{margin-left:auto;display:flex;background:rgba(255,255,255,.1);border-radius:8px;padding:4px;gap:3px;}
+.msw-btn{padding:7px 16px;border-radius:6px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;color:rgba(255,255,255,.6);background:transparent;text-decoration:none;display:flex;align-items:center;gap:5px;}
+.msw-btn.active{background:var(--yellow);color:var(--blue);}
+.msw-btn:not(.active):hover{color:#fff;background:rgba(255,255,255,.12);}
 
 @media(max-width:960px){.page{grid-template-columns:1fr;}.qcol{position:static;}.ch-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:580px){.g2,.g3,.ch-grid{grid-template-columns:1fr;}}
@@ -202,7 +207,11 @@ textarea{resize:vertical;min-height:70px;line-height:1.55;}
   <div class="tb-sep"></div>
   <div class="tb-info">
     <h1>Generador de Contenido Pro</h1>
-    <p>Multicanal · PDF &amp; Imagen · Magento 2 · Historial de sesión</p>
+    <p>Individual · PDF, Imagen o Manual · Multicanal</p>
+  </div>
+  <div class="mode-switch">
+    <a href="index.html" class="msw-btn active">✏️ Individual</a>
+    <a href="lote.html" class="msw-btn">⚡ Masivo</a>
   </div>
 </nav>
 
