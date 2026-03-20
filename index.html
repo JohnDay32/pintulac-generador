@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pintulac · Generador de Contenido Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
   --blue:#001389;--blue-mid:#001eb5;--blue-light:#e8eaf6;--blue-xlight:#f0f2fa;
@@ -361,7 +362,6 @@ textarea{resize:vertical;min-height:70px;line-height:1.55;}
     <div class="exps">
       <button class="btn-ex primary" id="bCSV" onclick="expCSV()" disabled>📊 Exportar CSV Magento 2</button>
       <button class="btn-ex" id="bML" onclick="expML()" disabled>🛒 Exportar Mercado Libre</button>
-      <button class="btn-ex" id="bB2C" onclick="expB2C()" disabled>🌐 Exportar Web B2C</button>
       <button class="btn-ex" id="bAll" onclick="expAll()" disabled>📦 Exportar Todo (.json)</button>
       <button class="btn-clr" onclick="clearQ()">🗑 Limpiar cola</button>
     </div>
@@ -501,7 +501,7 @@ function renderQ(){
   const n=Q.length;
   document.getElementById('qCount').textContent=n;
   document.getElementById('qSub').textContent=n?`${n} producto${n>1?'s':''} listo${n>1?'s':''} para exportar.`:'Agrega productos para exportar en lote.';
-  ['bCSV','bML','bGeneral','bAll'].forEach(id=>{const el=document.getElementById(id);if(el)el.disabled=!n;});
+  ['bCSV','bML','bGeneral'].forEach(id=>{const el=document.getElementById(id);if(el)el.disabled=!n;});
   document.getElementById('qList').innerHTML=!n
     ?'<div class="eq"><div class="eq-ic">📋</div>Aún no hay productos.<br>Genera y agrega aquí.</div>'
     :Q.map((p,i)=>`<div class="qitem${editIdx===i?' editing':''}" onclick="editQ(${i})"><div class="qi-info"><div class="qi-name">${p.nombre}</div><div class="qi-cat">${p.cat||''}</div>${p.sku?`<div class="qi-sku">${p.sku}</div>`:''}</div><div class="qi-actions"><button class="btn-qi edit" title="Editar" onclick="editQ(${i});event.stopPropagation()">✏️</button><button class="btn-qi del" title="Eliminar" onclick="delQ(${i},event)">×</button></div></div>`).join('');
@@ -528,30 +528,33 @@ function resetForm(){
 
 // ─── EXPORTS ──────────────────────────────────────────────────────────
 function esc(v){if(!v)return'';v=String(v).replace(/"/g,'""');if(/[,"\n\r]/.test(v))v=`"${v}"`;return v;}
-function dl(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+content],{type}));a.download=name;a.click();}
+function dlXlsx(filename, sheetName, data){
+  const ws=XLSX.utils.json_to_sheet(data);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,sheetName);
+  XLSX.writeFile(wb,filename);
+}
 function ts(){return new Date().toISOString().slice(0,10);}
 
 function expCSV(){
-  const cols=['sku','attribute_set_code','product_type','categories','product_websites','name','description','short_description','tax_class_name','visibility','price','url_key','meta_title','meta_keywords','meta_description','base_image','base_image_label','small_image','small_image_label','thumbnail_image','thumbnail_image_label','swatch_image','swatch_image_label','gift_message_available','msrp_display_actual_price_type','additional_attributes'];
   const items=Q.filter(p=>p.magento);
   if(!items.length){alert('No hay productos con contenido de Magento 2 en la cola.');return;}
-  const header=cols.map(c=>'"'+c+'"').join(',');
-  const rows=items.map(p=>{const m=p.magento||{};const v={sku:p.sku,attribute_set_code:'pintulac',product_type:'simple',categories:'',product_websites:'base',name:m['r-m-name']||'',description:m['r-m-desc']||'',short_description:m['r-m-short']||'',tax_class_name:'Producto con IVA',visibility:'Catalog, Search',price:'',url_key:'',meta_title:m['r-m-mt']||'',meta_keywords:m['r-m-mk']||'',meta_description:m['r-m-md']||'',base_image:'',base_image_label:'',small_image:'',small_image_label:'',thumbnail_image:'',thumbnail_image_label:'',swatch_image:'',swatch_image_label:'',gift_message_available:'Use config',msrp_display_actual_price_type:'Use config',additional_attributes:''};return cols.map(c=>'"'+esc(v[c])+'"').join(',');});
-  dl('pintulac_magento2_'+ts()+'.csv',[header,...rows].join('\n'),'text/csv');
+  const data=items.map(p=>{const m=p.magento||{};return{sku:p.sku,attribute_set_code:'pintulac',product_type:'simple',categories:'',product_websites:'base',name:m['r-m-name']||'',description:m['r-m-desc']||'',short_description:m['r-m-short']||'',tax_class_name:'Producto con IVA',visibility:'Catalog, Search',price:'',url_key:'',meta_title:m['r-m-mt']||'',meta_keywords:m['r-m-mk']||'',meta_description:m['r-m-md']||'',base_image:'',base_image_label:'',small_image:'',small_image_label:'',thumbnail_image:'',thumbnail_image_label:'',swatch_image:'',swatch_image_label:'',gift_message_available:'Use config',msrp_display_actual_price_type:'Use config',additional_attributes:''};});
+  dlXlsx('pintulac_magento2_'+ts()+'.xlsx','Magento2',data);
 }
 function expML(){
   const items=Q.filter(p=>p.ml);
   if(!items.length){alert('No hay productos con contenido de Mercado Libre en la cola.');return;}
-  const rows=['"SKU","Titulo","Descripcion"',...items.map(p=>['"'+esc(p.sku||'')+'"','"'+esc(p.ml['r-ml-t']||'')+'"','"'+esc(p.ml['r-ml-d']||'')+'"'].join(','))];
-  dl('pintulac_mercadolibre_'+ts()+'.csv',rows.join('\n'),'text/csv;charset=utf-8;');
+  const data=items.map(p=>({SKU:p.sku||'',Titulo:p.ml['r-ml-t']||'',Descripcion:p.ml['r-ml-d']||''}));
+  dlXlsx('pintulac_mercadolibre_'+ts()+'.xlsx','MercadoLibre',data);
 }
 function expGeneral(){
   const items=Q.filter(p=>p.general);
   if(!items.length){alert('No hay productos con contenido General en la cola.');return;}
-  const rows=['"SKU","Descripcion corta","Descripcion larga"',...items.map(p=>['"'+esc(p.sku||'')+'"','"'+esc(p.general['r-gen-s']||'')+'"','"'+esc(p.general['r-gen-l']||'')+'"'].join(','))];
-  dl('pintulac_general_'+ts()+'.csv',rows.join('\n'),'text/csv;charset=utf-8;');
+  const data=items.map(p=>({SKU:p.sku||'',Descripcion_corta:p.general['r-gen-s']||'',Descripcion_larga:p.general['r-gen-l']||''}));
+  dlXlsx('pintulac_general_'+ts()+'.xlsx','General',data);
 }
-function expAll(){dl('pintulac_todos_canales_'+ts()+'.json',JSON.stringify(Q,null,2),'application/json');}
+// JSON export removed
 
 // ─── GENERATE ─────────────────────────────────────────────────────────
 async function generar(){
