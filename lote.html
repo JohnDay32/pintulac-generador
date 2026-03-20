@@ -9,7 +9,7 @@
 :root{
   --blue:#001389;--blue-mid:#001eb5;--blue-light:#e8eaf6;--blue-xlight:#f0f2fa;
   --yellow:#FAEF0B;--yellow-dk:#d4c900;
-  --cel:#29A4DE;--cel-light:#e8f5fd;--cel-dark:#1a85b8;
+  --cel:#29A4DE;--cel-light:#e8f5fd;
   --white:#fff;--bg:#F2F4F8;--card:#fff;--border:#dde2f0;
   --text:#0D1340;--text2:#4A5080;--text3:#8892b0;
   --success:#0fb86a;--warn:#f59e0b;--danger:#ef4444;
@@ -17,9 +17,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;min-height:100vh;}
-
-/* TOPBAR */
+body{background:var(--bg);color:var(--text);font-family:"Montserrat",sans-serif;min-height:100vh;}
 .topbar{background:var(--blue);padding:0 24px;display:flex;align-items:center;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.22);}
 .logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
 .logo svg{width:36px;height:36px;flex-shrink:0;}
@@ -29,45 +27,31 @@ body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;
 .tb-info h1{font-size:11px;font-weight:800;color:rgba(255,255,255,.9);letter-spacing:2px;text-transform:uppercase;}
 .tb-info p{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px;margin-top:2px;}
 .mode-switch{margin-left:auto;display:flex;background:rgba(255,255,255,.1);border-radius:8px;padding:4px;gap:3px;}
-.msw-btn{padding:7px 16px;border-radius:6px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;color:rgba(255,255,255,.6);background:transparent;text-decoration:none;display:flex;align-items:center;gap:5px;}
+.msw-btn{padding:7px 16px;border-radius:6px;font-family:"Montserrat",sans-serif;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;color:rgba(255,255,255,.6);background:transparent;text-decoration:none;display:flex;align-items:center;gap:5px;}
 .msw-btn.active{background:var(--yellow);color:var(--blue);}
 .msw-btn:not(.active):hover{color:#fff;background:rgba(255,255,255,.12);}
-
-/* PAGE */
 .page{max-width:1200px;margin:0 auto;padding:28px 18px 80px;}
-
-/* CARD */
 .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;box-shadow:var(--sh);}
-
-/* STEP HDR */
 .shdr{display:flex;align-items:center;gap:9px;margin-bottom:16px;}
 .sn{width:24px;height:24px;background:var(--blue);color:var(--yellow);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;}
 .st{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);}
-.shdr::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* BANNER */
+.shdr::after{content:"";flex:1;height:1px;background:var(--border);}
 .banner{background:var(--cel-light);border:1px solid var(--cel);border-radius:8px;padding:10px 13px;display:flex;align-items:flex-start;gap:9px;margin-bottom:14px;}
 .banner p{font-size:11px;color:var(--blue);font-weight:500;line-height:1.6;}
 .banner strong{font-weight:800;}
-
-/* DROPZONE */
+.banner.warn{background:#fffbeb;border-color:var(--warn);}
+.banner.warn p{color:#92400e;}
 .dz{border:2px dashed var(--border);border-radius:10px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .25s;background:#fafbff;}
 .dz:hover,.dz.over{border-color:var(--cel);background:var(--cel-light);}
 .dz-icon{font-size:48px;margin-bottom:12px;display:block;}
 .dz-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px;}
 .dz-sub{font-size:11px;color:var(--text3);font-weight:500;line-height:1.6;}
 .dz-badge{display:inline-flex;align-items:center;gap:5px;margin-top:12px;background:var(--blue-xlight);border:1px solid var(--blue-light);border-radius:20px;padding:4px 14px;font-size:9px;font-weight:700;color:var(--blue);letter-spacing:1px;text-transform:uppercase;}
-
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
 .stat-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center;box-shadow:var(--sh);}
 .stat-n{font-size:28px;font-weight:900;color:var(--blue);line-height:1;}
-.stat-n.success{color:var(--success);}
-.stat-n.danger{color:var(--danger);}
-.stat-n.warn{color:var(--warn);}
+.stat-n.success{color:var(--success);}.stat-n.danger{color:var(--danger);}.stat-n.warn{color:var(--warn);}
 .stat-l{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-top:4px;}
-
-/* CHANNEL SELECTOR */
 .ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .ch-chip{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;}
 .ch-chip:hover{border-color:var(--blue);background:var(--blue-xlight);}
@@ -79,17 +63,13 @@ body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;
 .ch-desc{font-size:9px;color:var(--text3);margin-top:1px;}
 .ch-check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .ch-chip.on .ch-check{background:var(--blue);border-color:var(--blue);}
-.ch-chip.on .ch-check::after{content:'✓';font-size:9px;color:var(--yellow);font-weight:900;}
+.ch-chip.on .ch-check::after{content:"✓";font-size:9px;color:var(--yellow);font-weight:900;}
 .ch-chip.on .ch-name{color:var(--blue);}
-
-/* API ROW */
 .api-row{display:flex;align-items:center;gap:10px;background:var(--blue-xlight);border:1px solid var(--blue-light);border-radius:8px;padding:12px 14px;margin-top:14px;}
 .api-row label{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);white-space:nowrap;}
-.api-row input{flex:1;background:#fff;border:1.5px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;padding:8px 10px;outline:none;border-radius:6px;transition:border-color .2s;}
+.api-row input{flex:1;background:#fff;border:1.5px solid var(--border);color:var(--text);font-family:"Montserrat",sans-serif;font-size:12px;font-weight:500;padding:8px 10px;outline:none;border-radius:6px;transition:border-color .2s;}
 .api-row input:focus{border-color:var(--cel);}
 .api-hint{font-size:9px;color:var(--text3);margin-top:5px;font-weight:500;}
-
-/* TABLE */
 .tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:11px;}
 thead tr{background:var(--blue);color:var(--yellow);}
@@ -99,28 +79,25 @@ tbody tr:last-child{border-bottom:none;}
 tbody tr:hover{background:var(--blue-xlight);}
 tbody td{padding:8px 10px;vertical-align:middle;}
 .td-num{width:36px;text-align:center;font-weight:800;color:var(--text3);font-size:10px;}
-.td-file-name{font-weight:700;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
+.td-file-name{font-weight:700;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
 .td-file-size{font-size:9px;color:var(--text3);margin-top:1px;}
-.td-sku input,.td-cat select,.td-sub select,.td-lin select{background:#fff;border:1.5px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;padding:6px 8px;outline:none;border-radius:5px;width:100%;transition:border-color .2s;appearance:none;}
-.td-sku input:focus,.td-cat select:focus,.td-sub select:focus,.td-lin select:focus{border-color:var(--cel);}
-.td-sku{min-width:100px;}.td-cat{min-width:160px;}.td-sub{min-width:150px;}.td-lin{min-width:140px;}
-.td-status{width:110px;text-align:center;}
-.td-del{width:36px;text-align:center;}
+.td-sku input,.td-cat select,.td-lin select,.td-sub select{background:#fff;border:1.5px solid var(--border);color:var(--text);font-family:"Montserrat",sans-serif;font-size:11px;font-weight:600;padding:6px 8px;outline:none;border-radius:5px;width:100%;transition:border-color .2s;appearance:none;}
+.td-sku input:focus,.td-cat select:focus,.td-lin select:focus,.td-sub select:focus{border-color:var(--cel);}
+.td-sku{min-width:100px;}.td-cat{min-width:160px;}.td-lin{min-width:150px;}.td-sub{min-width:140px;}
+.td-status{width:120px;text-align:center;}.td-del{width:36px;text-align:center;}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238892b0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:22px;cursor:pointer;appearance:none;}
 select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
-
-/* BADGES */
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;}
 .badge.pending{background:#f0f2fa;color:var(--text3);border:1px solid var(--border);}
+.badge.classifying{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;}
 .badge.running{background:#fff8e1;color:#b45309;border:1px solid #fde68a;}
 .badge.done{background:#f0fdf7;color:var(--success);border:1px solid #a7f3d0;}
 .badge.error{background:#fef2f2;color:var(--danger);border:1px solid #fecaca;}
-.spin-sm{width:9px;height:9px;border:2px solid rgba(180,83,9,.25);border-top-color:#b45309;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0;}
+.spin-sm{width:9px;height:9px;border:2px solid rgba(3,105,161,.2);border-top-color:#0369a1;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0;}
+.spin-sm.yellow{border:2px solid rgba(180,83,9,.25);border-top-color:#b45309;}
 @keyframes sp{to{transform:rotate(360deg)}}
 .btn-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:15px;padding:2px 4px;border-radius:4px;transition:all .2s;}
 .btn-del:hover{color:var(--danger);background:#fef2f2;}
-
-/* PROGRESS */
 .progress-wrap{margin-top:16px;display:none;}
 .progress-wrap.on{display:block;}
 .progress-info{display:flex;justify-content:space-between;margin-bottom:6px;}
@@ -128,9 +105,7 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
 .progress-pct{font-size:11px;font-weight:800;color:var(--cel);}
 .progress-bar-bg{height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cel));border-radius:4px;transition:width .4s;width:0%;}
-
-/* BUTTONS */
-.btn-gen{width:100%;padding:14px 20px;background:var(--blue);color:var(--yellow);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(0,19,137,.22);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;}
+.btn-gen{width:100%;padding:14px 20px;background:var(--blue);color:var(--yellow);border:none;border-radius:8px;font-family:"Montserrat",sans-serif;font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(0,19,137,.22);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;}
 .btn-gen:hover:not(:disabled){background:var(--blue-mid);transform:translateY(-1px);}
 .btn-gen:disabled{opacity:.45;cursor:not-allowed;transform:none;}
 .spin{width:13px;height:13px;border:2.5px solid rgba(250,239,11,.3);border-top-color:var(--yellow);border-radius:50%;animation:sp .7s linear infinite;}
@@ -139,22 +114,21 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
 .export-section{display:none;margin-top:16px;}
 .export-section.on{display:block;}
 .export-title{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:8px;margin-bottom:12px;}
-.export-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.export-title::after{content:"";flex:1;height:1px;background:var(--border);}
 .export-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;}
-.btn-exp{padding:11px 12px;border:1.5px solid var(--border);background:#fff;color:var(--text2);border-radius:8px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;width:100%;}
+.btn-exp{padding:11px 12px;border:1.5px solid var(--border);background:#fff;color:var(--text2);border-radius:8px;font-family:"Montserrat",sans-serif;font-weight:700;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;width:100%;}
 .btn-exp:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-xlight);}
 .btn-exp.primary{background:var(--blue);color:var(--yellow);border-color:var(--blue);}
 .btn-exp.primary:hover{background:var(--blue-mid);}
-.btn-sm{padding:7px 14px;border:1.5px solid var(--border);background:#fff;color:var(--text2);border-radius:6px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-sm{padding:7px 14px;border:1.5px solid var(--border);background:#fff;color:var(--text2);border-radius:6px;font-family:"Montserrat",sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
 .btn-sm:hover{border-color:var(--blue);color:var(--blue);}
 .btn-sm.danger:hover{border-color:var(--danger);color:var(--danger);}
-
+.ai-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,var(--blue),var(--cel));color:#fff;border-radius:4px;padding:2px 7px;font-size:8px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-left:6px;}
 @media(max-width:700px){.stats-row{grid-template-columns:1fr 1fr;}.ch-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:480px){.ch-grid{grid-template-columns:1fr;}.stats-row{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
-
 <nav class="topbar">
   <a class="logo" href="index.html">
     <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -167,16 +141,16 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
   <div class="tb-sep"></div>
   <div class="tb-info">
     <h1>Generador Masivo · Lote</h1>
-    <p>Múltiples PDFs · Procesamiento automático · Exportación multicanal</p>
+    <p>Múltiples PDFs · Clasificación IA automática · Exportación multicanal</p>
   </div>
   <div class="mode-switch">
     <a href="index.html" class="msw-btn">✏️ Individual</a>
     <a href="lote.html" class="msw-btn active">⚡ Masivo</a>
   </div>
 </nav>
-
 <div class="page">
 
+  <!-- STATS -->
   <div class="stats-row">
     <div class="stat-box"><div class="stat-n" id="stTotal">0</div><div class="stat-l">PDFs cargados</div></div>
     <div class="stat-box"><div class="stat-n warn" id="stPending">0</div><div class="stat-l">Pendientes</div></div>
@@ -184,23 +158,43 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
     <div class="stat-box"><div class="stat-n danger" id="stError">0</div><div class="stat-l">Con error</div></div>
   </div>
 
-  <!-- STEP 1 -->
+  <!-- STEP 1: CONFIG -->
   <div class="card">
-    <div class="shdr"><span class="sn">1</span><span class="st">Cargar fichas técnicas</span></div>
-    <div class="banner"><span>💡</span><p><strong>Tip:</strong> Nombra tus archivos con el SKU del producto (ej: <strong>DX4200-CA.pdf</strong>) para que el sistema lo detecte automáticamente. Puedes editar el SKU en la tabla antes de generar.</p></div>
+    <div class="shdr"><span class="sn">1</span><span class="st">Canales y API Key</span></div>
+    <div class="ch-grid" style="margin-bottom:14px;">
+      <label class="ch-chip on" onclick="toggleCh(this,'magento')"><input type="checkbox" checked><span class="ch-icon">🏪</span><div class="ch-info"><div class="ch-name">Magento 2</div><div class="ch-desc">CSV directo · 26 columnas</div></div><div class="ch-check"></div></label>
+      <label class="ch-chip on" onclick="toggleCh(this,'ml')"><input type="checkbox" checked><span class="ch-icon">🛒</span><div class="ch-info"><div class="ch-name">Mercado Libre</div><div class="ch-desc">Título + descripción</div></div><div class="ch-check"></div></label>
+      <label class="ch-chip on" onclick="toggleCh(this,'general')"><input type="checkbox" checked><span class="ch-icon">📦</span><div class="ch-info"><div class="ch-name">General</div><div class="ch-desc">Desc. corta + desc. larga</div></div><div class="ch-check"></div></label>
+    </div>
+    <div class="api-row">
+      <label>🔑 API Key</label>
+      <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off">
+    </div>
+    <div class="api-hint">Requerida para clasificación automática y generación · <strong>console.anthropic.com</strong></div>
+  </div>
+
+  <!-- STEP 2: UPLOAD -->
+  <div class="card">
+    <div class="shdr"><span class="sn">2</span><span class="st">Cargar fichas técnicas</span></div>
+    <div class="banner"><span>🤖</span><p><strong>Clasificación automática con IA:</strong> Al subir los PDFs, la IA analizará cada ficha y asignará automáticamente la Categoría, Línea y Sublínea de Pintulac. Puedes editar cualquier campo si hay un error.</p></div>
     <div class="dz" id="dz" onclick="document.getElementById('fileIn').click()">
       <input type="file" id="fileIn" accept=".pdf" multiple style="display:none">
       <span class="dz-icon">📂</span>
       <div class="dz-title">Arrastra todos tus PDFs aquí</div>
-      <div class="dz-sub">Múltiples archivos permitidos · Fichas técnicas de proveedores<br>El sistema los procesará uno por uno automáticamente</div>
+      <div class="dz-sub">Múltiples archivos permitidos · Fichas técnicas de proveedores<br>La IA clasificará y generará contenido automáticamente</div>
       <div class="dz-badge">📄 Seleccionar PDFs</div>
     </div>
   </div>
 
-  <!-- STEP 2 -->
+  <!-- STEP 3: TABLE -->
   <div class="card" id="tableCard" style="display:none">
-    <div class="shdr"><span class="sn">2</span><span class="st">Revisar y clasificar productos</span></div>
-    <div class="banner"><span>📋</span><p>Verifica el <strong>SKU</strong> de cada producto y asigna <strong>Categoría → Línea → Sublínea</strong> de Pintulac. La IA usará esta clasificación para generar el contenido correcto.</p></div>
+    <div class="shdr">
+      <span class="sn">3</span>
+      <span class="st">Revisar clasificación</span>
+      <span class="ai-badge">✨ IA</span>
+    </div>
+    <div class="banner warn" id="classifyBanner" style="display:none"><span>⏳</span><p id="classifyBannerTxt">Clasificando productos con IA...</p></div>
+    <div class="banner"><span>📋</span><p>La IA pre-llenó <strong>Categoría, Línea y Sublínea</strong> automáticamente. Revisa y corrige si es necesario antes de generar.</p></div>
     <div class="tbl-wrap">
       <table>
         <thead><tr>
@@ -208,8 +202,8 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
           <th>Archivo</th>
           <th class="td-sku">SKU</th>
           <th class="td-cat">Categoría</th>
-          <th class="td-sub">Línea</th>
-          <th class="td-lin">Sublínea</th>
+          <th class="td-lin">Línea</th>
+          <th class="td-sub">Sublínea</th>
           <th class="td-status">Estado</th>
           <th class="td-del"></th>
         </tr></thead>
@@ -222,28 +216,10 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
     </div>
   </div>
 
-  <!-- STEP 3 -->
-  <div class="card" id="configCard" style="display:none">
-    <div class="shdr"><span class="sn">3</span><span class="st">Canales y configuración</span></div>
-    <div class="ch-grid">
-      <label class="ch-chip on" onclick="toggleCh(this,'magento')"><input type="checkbox" checked><span class="ch-icon">🏪</span><div class="ch-info"><div class="ch-name">Magento 2</div><div class="ch-desc">CSV directo · 26 columnas</div></div><div class="ch-check"></div></label>
-      <label class="ch-chip on" onclick="toggleCh(this,'ml')"><input type="checkbox" checked><span class="ch-icon">🛒</span><div class="ch-info"><div class="ch-name">Mercado Libre</div><div class="ch-desc">Título + descripción</div></div><div class="ch-check"></div></label>
-      <label class="ch-chip on" onclick="toggleCh(this,'mkt')"><input type="checkbox" checked><span class="ch-icon">📦</span><div class="ch-info"><div class="ch-name">Marketplaces</div><div class="ch-desc">Aliados y distribuidores</div></div><div class="ch-check"></div></label>
-      <label class="ch-chip" onclick="toggleCh(this,'b2c')"><input type="checkbox"><span class="ch-icon">🌐</span><div class="ch-info"><div class="ch-name">Web B2C</div><div class="ch-desc">Consumidor final · SEO</div></div><div class="ch-check"></div></label>
-      <label class="ch-chip" onclick="toggleCh(this,'b2b')"><input type="checkbox"><span class="ch-icon">🏭</span><div class="ch-info"><div class="ch-name">Web B2B</div><div class="ch-desc">Empresas · técnico</div></div><div class="ch-check"></div></label>
-      <label class="ch-chip" onclick="toggleCh(this,'pim')"><input type="checkbox"><span class="ch-icon">🗄️</span><div class="ch-info"><div class="ch-name">PIM Interno</div><div class="ch-desc">Catálogo neutral</div></div><div class="ch-check"></div></label>
-    </div>
-    <div class="api-row">
-      <label>🔑 API Key</label>
-      <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off">
-    </div>
-    <div class="api-hint">Obtén tu clave en <strong>console.anthropic.com</strong></div>
-  </div>
-
-  <!-- STEP 4 -->
+  <!-- STEP 4: GENERATE -->
   <div class="card" id="genCard" style="display:none">
     <div class="shdr"><span class="sn">4</span><span class="st">Generar lote</span></div>
-    <div class="banner"><span>⚡</span><p id="bannerTxt">El sistema procesará cada PDF en secuencia. Puedes dejar la pestaña abierta mientras trabaja.</p></div>
+    <div class="banner"><span>⚡</span><p id="bannerTxt">El sistema procesará cada PDF en secuencia generando contenido SEO optimizado para Ecuador.</p></div>
     <div class="progress-wrap" id="progressWrap">
       <div class="progress-info">
         <span class="progress-label" id="progressLabel">Procesando...</span>
@@ -258,153 +234,226 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
       <div class="export-grid">
         <button class="btn-exp primary" onclick="expMagento()">📥 CSV Magento 2</button>
         <button class="btn-exp" onclick="expML()">📄 TXT Mercado Libre</button>
-        <button class="btn-exp" onclick="expMkt()">📄 TXT Marketplaces</button>
-        <button class="btn-exp" onclick="expB2C()">📄 TXT B2C</button>
-        <button class="btn-exp" onclick="expB2B()">📄 TXT B2B</button>
+        <button class="btn-exp" onclick="expGeneral()">📄 TXT General</button>
         <button class="btn-exp" onclick="expAll()">📦 JSON Completo</button>
       </div>
     </div>
   </div>
 
 </div>
-
 <script>
-const D=[["ACABADOS Y CONSTRUCCION","Aditivos","Morteros"],["ACABADOS Y CONSTRUCCION","Cementos","Morteros"],["ACABADOS Y CONSTRUCCION","Ceramica","Pisos"],["ACABADOS Y CONSTRUCCION","Complementos","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Complementos","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Complementos","Pisos"],["ACABADOS Y CONSTRUCCION","Complementos","Techos y cubiertas"],["ACABADOS Y CONSTRUCCION","Empastes","Morteros"],["ACABADOS Y CONSTRUCCION","Estructura","Construciones livianas"],["ACABADOS Y CONSTRUCCION","fibrocemento","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Herramientas","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Herramientas","Pisos"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes asfalticos","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes en membrana","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes liquidos","Impermeabilizantes"],["ACABADOS Y CONSTRUCCION","Masillas","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Paneles de aluminio","Revestimientos"],["ACABADOS Y CONSTRUCCION","Pegantes","Morteros"],["ACABADOS Y CONSTRUCCION","Piso bambu","Pisos"],["ACABADOS Y CONSTRUCCION","Piso de ingenieria","Pisos"],["ACABADOS Y CONSTRUCCION","Piso flotante","Pisos"],["ACABADOS Y CONSTRUCCION","Piso madera solida","Pisos"],["ACABADOS Y CONSTRUCCION","Piso PVC","Pisos"],["ACABADOS Y CONSTRUCCION","Piso SPC","Pisos"],["ACABADOS Y CONSTRUCCION","Planchas de granito","Revestimientos"],["ACABADOS Y CONSTRUCCION","Planchas gypsum","Construciones livianas"],["ACABADOS Y CONSTRUCCION","Planchas PVC","Revestimientos"],["ACABADOS Y CONSTRUCCION","Planchas PVC Sintra","Revestimientos"],["ACABADOS Y CONSTRUCCION","Planchas UPVC","Techos y cubiertas"],["ACABADOS Y CONSTRUCCION","Policarbonato","Techos y cubiertas"],["ACABADOS Y CONSTRUCCION","Porcelanato","Pisos"],["ACABADOS Y CONSTRUCCION","Protectores y limpiadores","Pisos"],["ACABADOS Y CONSTRUCCION","Revestimientos de Piedra","Revestimientos"],["ACABADOS Y CONSTRUCCION","Selladores","Morteros"],["ACABADOS Y CONSTRUCCION","Teja espanola PVC","Techos y cubiertas"],["DIVISION AUTOMOTRIZ","A Bateria","Generadores"],["DIVISION AUTOMOTRIZ","Accesorios y repuestos","Generadores"],["DIVISION AUTOMOTRIZ","Accesorios y repuestos","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Accesorios y repuestos","Metalmecanica"],["DIVISION AUTOMOTRIZ","Alineacion y balanceo","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Amoladoras y pulidoras","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Elevadores","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Enderezada y pintura","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Equipos de diagnostico","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Equipos de lubricacion","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Herramientas hidraulicas","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Herramientas manuales","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Herramientas varias","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Lijadoras","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Repuestos","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Sierras","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Sierras","Metalmecanica"],["DIVISION AUTOMOTRIZ","Soportes y ergonomia","Equipamiento automotriz"],["DIVISION AUTOMOTRIZ","Taladros","Herramientas electricas"],["DIVISION AUTOMOTRIZ","Taladros","Metalmecanica"],["DIVISION AUTOMOTRIZ","Tornos","Metalmecanica"],["ENERGIAS RENOVABLES","Almacenamiento","Accesorios"],["ENERGIAS RENOVABLES","Almacenamiento","Equipos"],["ENERGIAS RENOVABLES","Captación","Accesorios"],["ENERGIAS RENOVABLES","Captación","Equipos"],["ENERGIAS RENOVABLES","Captación","Insumos"],["ENERGIAS RENOVABLES","Conversión","Accesorios"],["ENERGIAS RENOVABLES","Conversión","Equipos"],["FERRETERIA Y HOGAR","Accesorios","Hidrosanitaria"],["FERRETERIA Y HOGAR","Accesorios arte","Arte"],["FERRETERIA Y HOGAR","Accesorios parrillas","Outdoors"],["FERRETERIA Y HOGAR","Accesorios y repuestos","Linea autocare"],["FERRETERIA Y HOGAR","Aditivos","Linea autocare"],["FERRETERIA Y HOGAR","Alambres","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Arte Urbano","Sprays"],["FERRETERIA Y HOGAR","Audio y video","Hogar"],["FERRETERIA Y HOGAR","Banos y griferia","Hidrosanitaria"],["FERRETERIA Y HOGAR","Bastidores","Arte"],["FERRETERIA Y HOGAR","Bebidas","Alimentos y bebidas"],["FERRETERIA Y HOGAR","Bioseguridad","Seguridad Industrial"],["FERRETERIA Y HOGAR","Brochas","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Cables","Material electrico"],["FERRETERIA Y HOGAR","Cadenas","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Calentadores","Outdoors"],["FERRETERIA Y HOGAR","Candados","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Carpas","Outdoors"],["FERRETERIA Y HOGAR","Cerraduras","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Cintas","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Complementos","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Complementos","Hogar"],["FERRETERIA Y HOGAR","Complementos","Seguridad Industrial"],["FERRETERIA Y HOGAR","Complementos","Sprays"],["FERRETERIA Y HOGAR","Complementos de aplicacion","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Complementos tuberia","Hidrosanitaria"],["FERRETERIA Y HOGAR","Coolers","Outdoors"],["FERRETERIA Y HOGAR","Decoracion paredes","Arte"],["FERRETERIA Y HOGAR","Desinfectantes","Limpieza"],["FERRETERIA Y HOGAR","Domotica","Hogar"],["FERRETERIA Y HOGAR","Envases","Envases"],["FERRETERIA Y HOGAR","Equipos de proteccion personal","Seguridad Industrial"],["FERRETERIA Y HOGAR","Espatulas","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Especiales","Sprays"],["FERRETERIA Y HOGAR","Espumas","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Extintores","Seguridad Industrial"],["FERRETERIA Y HOGAR","Extractores","Hogar"],["FERRETERIA Y HOGAR","Herrajes","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Herramientas electricas","Material electrico"],["FERRETERIA Y HOGAR","Herramientas y accesorios","Material electrico"],["FERRETERIA Y HOGAR","Iluminacion","Material electrico"],["FERRETERIA Y HOGAR","Intercomunicadores y timbres","Hogar"],["FERRETERIA Y HOGAR","Juguetes","Hogar"],["FERRETERIA Y HOGAR","Lija de agua","Abrasivos"],["FERRETERIA Y HOGAR","Lijas","Abrasivos"],["FERRETERIA Y HOGAR","Lijas en seco","Abrasivos"],["FERRETERIA Y HOGAR","Lijas velcron","Abrasivos"],["FERRETERIA Y HOGAR","Limpiadores","Limpieza"],["FERRETERIA Y HOGAR","Limpiadores","Linea autocare"],["FERRETERIA Y HOGAR","Maderas","Arte"],["FERRETERIA Y HOGAR","Mantenimiento","Linea autocare"],["FERRETERIA Y HOGAR","Muebles","Hogar"],["FERRETERIA Y HOGAR","Parrillas gas y carbon","Outdoors"],["FERRETERIA Y HOGAR","Pernos y clavos","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Pilas y linternas","Hogar"],["FERRETERIA Y HOGAR","Pinceles","Arte"],["FERRETERIA Y HOGAR","Pinturas y spray","Arte"],["FERRETERIA Y HOGAR","Plantas","Hogar"],["FERRETERIA Y HOGAR","Plasticos","Hogar"],["FERRETERIA Y HOGAR","Proteccion manos","Seguridad Industrial"],["FERRETERIA Y HOGAR","Purificacion agua","Hogar"],["FERRETERIA Y HOGAR","Recipientes","Limpieza"],["FERRETERIA Y HOGAR","Rodillos","Herramientas de aplicacion"],["FERRETERIA Y HOGAR","Senalizacion","Seguridad Industrial"],["FERRETERIA Y HOGAR","Silicones","Adhesivos y selladores"],["FERRETERIA Y HOGAR","Snacks","Alimentos y bebidas"],["FERRETERIA Y HOGAR","Sujetadores","Herrajes y anclajes"],["FERRETERIA Y HOGAR","Tuberia PVC","Hidrosanitaria"],["FERRETERIA Y HOGAR","Uso general","Sprays"],["FERRETERIA Y HOGAR","Ventilacion","Hogar"],["MAQUINARIA Y HERRAMIENTAS","Accesorios","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Accesorios","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Accesorios","Sandblasting"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Aspiradoras"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Calentamiento y purificacion"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Generadores"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y repuestos","Hidrolavadoras"],["MAQUINARIA Y HERRAMIENTAS","Aceites","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Aceites","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Apiladores y paleteras","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Brocas","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Calefones a gas","Calentamiento y purificacion"],["MAQUINARIA Y HERRAMIENTAS","Calentador electrico","Calentamiento y purificacion"],["MAQUINARIA Y HERRAMIENTAS","Centrifuga","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Combustion","Hidrolavadoras"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Complementos","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Consumibles soldadoras","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Desmalezadoras","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Discos","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Domesticos","Generadores"],["MAQUINARIA Y HERRAMIENTAS","Electricas","Hidrolavadoras"],["MAQUINARIA Y HERRAMIENTAS","Electricas","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Elevadores","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Equipos","Aspiradoras"],["MAQUINARIA Y HERRAMIENTAS","Equipos","Sandblasting"],["MAQUINARIA Y HERRAMIENTAS","Equipos de construccion","Equipos de construccion"],["MAQUINARIA Y HERRAMIENTAS","Fresas","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Gratas","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Herramientas electricas","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Herramientas manuales","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Herramientas neumaticas","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Industrial","Generadores"],["MAQUINARIA Y HERRAMIENTAS","Montacargas","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Motobomba","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Motosoldadoras","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Periferica","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Pistolas de gravedad","Herramientas"],["MAQUINARIA Y HERRAMIENTAS","Poda","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Accesorios y consumibles"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Equipos de manejo de carga"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Repuestos","Soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Riego","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Silenciosos","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Sumergible","Bombas de Agua"],["MAQUINARIA Y HERRAMIENTAS","Tornillo electrico","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Tractores","Jardineria"],["MAQUINARIA Y HERRAMIENTAS","Transmision Directa","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Transmision por banda","Compresores"],["MAQUINARIA Y HERRAMIENTAS","Usos especiales","Bombas de Agua"],["PINTURA","Acabados","Automotriz"],["PINTURA","Accesorios","Airless"],["PINTURA","Accesorios y repuestos","Madera"],["PINTURA","Aceites y preservantes","Madera"],["PINTURA","Aditivos y complementos","Plasticos reforzados"],["PINTURA","Aguarras","Reactivos y solventes"],["PINTURA","Altas temperaturas","Usos especiales"],["PINTURA","Anticorrosivos","Metalmecanica"],["PINTURA","Barniz","Automotriz"],["PINTURA","Boquillas","Airless"],["PINTURA","Canchas deportivas","Usos especiales"],["PINTURA","Cartas de colores","Catalogos"],["PINTURA","Caucho de silicon","Industrial"],["PINTURA","Colorantes y tintes","Madera"],["PINTURA","Complementos","Automotriz"],["PINTURA","Complementos","Madera"],["PINTURA","Complementos","Metalmecanica"],["PINTURA","Complementos","Preparadores de superficie"],["PINTURA","Complementos","Vial"],["PINTURA","Elastomericos","Arquitectonica"],["PINTURA","Electrostatica","Metalmecanica"],["PINTURA","Epoxicos","Industrial"],["PINTURA","Equipos","Airless"],["PINTURA","Esmaltes","Metalmecanica"],["PINTURA","Estucos","Alta decoracion"],["PINTURA","Fibra","Plasticos reforzados"],["PINTURA","Fijadores","Preparadores de superficie"],["PINTURA","Fondos","Preparadores de superficie"],["PINTURA","Granos","Agregados minerales"],["PINTURA","Herramientas","Madera"],["PINTURA","Herramientas","Metalmecanica"],["PINTURA","Horneables","Industrial"],["PINTURA","Impermeabilizantes","Arquitectonica"],["PINTURA","Imprimantes","Arquitectonica"],["PINTURA","Interiores/exteriores","Arquitectonica"],["PINTURA","Iridiscentes metalizados","Alta decoracion"],["PINTURA","Lacas y barnices","Madera"],["PINTURA","Limpiadores","Preparadores de superficie"],["PINTURA","Mangueras","Airless"],["PINTURA","Masillas","Preparadores de superficie"],["PINTURA","Metalicos","Envases"],["PINTURA","Microcemento","Alta decoracion"],["PINTURA","Minerales","Agregados minerales"],["PINTURA","Pegamentos","Madera"],["PINTURA","Pigmentos","Agregados minerales"],["PINTURA","Pintura nitro","Automotriz"],["PINTURA","Pintura poliester","Automotriz"],["PINTURA","Pintura poliuretano","Automotriz"],["PINTURA","Pintura sintetica","Arquitectonica"],["PINTURA","Pintura sintetica","Automotriz"],["PINTURA","Pistolas","Airless"],["PINTURA","Plasticos","Envases"],["PINTURA","Poliuretanos","Industrial"],["PINTURA","Polvos","Agregados minerales"],["PINTURA","Preparados","Arquitectonica"],["PINTURA","Primers","Preparadores de superficie"],["PINTURA","Pulimento","Automotriz"],["PINTURA","Reactivos","Reactivos y solventes"],["PINTURA","Recubrimientos para baldes","Usos especiales"],["PINTURA","Repuestos","Airless"],["PINTURA","Resinas","Plasticos reforzados"],["PINTURA","Resinas epoxicas","Industrial"],["PINTURA","Rusticos difuminados","Alta decoracion"],["PINTURA","Rusticos texturados","Alta decoracion"],["PINTURA","Satinados","Arquitectonica"],["PINTURA","Senalizacion","Vial"],["PINTURA","Techos","Usos especiales"],["PINTURA","Thinner acrilico","Reactivos y solventes"],["PINTURA","Thinner caucho clorado","Reactivos y solventes"],["PINTURA","Thinner epoxico","Reactivos y solventes"],["PINTURA","Thinner laca","Reactivos y solventes"],["PINTURA","Thinner poliuretano","Reactivos y solventes"],["PINTURA","Tintes","Industrial"],["PINTURA","Velados y tamponados","Alta decoracion"]];
+const D=[["ACABADOS Y CONSTRUCCION","Construciones livianas","Complementos"],["ACABADOS Y CONSTRUCCION","Construciones livianas","Estructura"],["ACABADOS Y CONSTRUCCION","Construciones livianas","fibrocemento"],["ACABADOS Y CONSTRUCCION","Construciones livianas","Herramientas"],["ACABADOS Y CONSTRUCCION","Construciones livianas","Masillas"],["ACABADOS Y CONSTRUCCION","Construciones livianas","Planchas gypsum"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes","Complementos"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes","Impermeabilizantes asfalticos"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes","Impermeabilizantes en membrana"],["ACABADOS Y CONSTRUCCION","Impermeabilizantes","Impermeabilizantes liquidos"],["ACABADOS Y CONSTRUCCION","Morteros","Aditivos"],["ACABADOS Y CONSTRUCCION","Morteros","Cementos"],["ACABADOS Y CONSTRUCCION","Morteros","Empastes"],["ACABADOS Y CONSTRUCCION","Morteros","Pegantes"],["ACABADOS Y CONSTRUCCION","Morteros","Selladores"],["ACABADOS Y CONSTRUCCION","Pisos","Ceramica"],["ACABADOS Y CONSTRUCCION","Pisos","Complementos"],["ACABADOS Y CONSTRUCCION","Pisos","Herramientas"],["ACABADOS Y CONSTRUCCION","Pisos","Piso bambu"],["ACABADOS Y CONSTRUCCION","Pisos","Piso de ingenieria"],["ACABADOS Y CONSTRUCCION","Pisos","Piso flotante"],["ACABADOS Y CONSTRUCCION","Pisos","Piso madera solida"],["ACABADOS Y CONSTRUCCION","Pisos","Piso PVC"],["ACABADOS Y CONSTRUCCION","Pisos","Piso SPC"],["ACABADOS Y CONSTRUCCION","Pisos","Porcelanato"],["ACABADOS Y CONSTRUCCION","Pisos","Protectores y limpiadores"],["ACABADOS Y CONSTRUCCION","Revestimientos","Paneles de aluminio"],["ACABADOS Y CONSTRUCCION","Revestimientos","Planchas de granito"],["ACABADOS Y CONSTRUCCION","Revestimientos","Planchas PVC"],["ACABADOS Y CONSTRUCCION","Revestimientos","Planchas PVC Sintra"],["ACABADOS Y CONSTRUCCION","Revestimientos","Revestimientos de Piedra"],["ACABADOS Y CONSTRUCCION","Techos y cubiertas","Complementos"],["ACABADOS Y CONSTRUCCION","Techos y cubiertas","Planchas UPVC"],["ACABADOS Y CONSTRUCCION","Techos y cubiertas","Policarbonato"],["ACABADOS Y CONSTRUCCION","Techos y cubiertas","Teja espanola PVC"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Alineacion y balanceo"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Elevadores"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Enderezada y pintura"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Equipos de diagnostico"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Equipos de lubricacion"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Herramientas hidraulicas"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Herramientas manuales"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Repuestos"],["DIVISION AUTOMOTRIZ","Equipamiento automotriz","Soportes y ergonomia"],["DIVISION AUTOMOTRIZ","Generadores","A Bateria"],["DIVISION AUTOMOTRIZ","Generadores","Accesorios y repuestos"],["DIVISION AUTOMOTRIZ","Herramientas electricas","Accesorios y repuestos"],["DIVISION AUTOMOTRIZ","Herramientas electricas","Amoladoras y pulidoras"],["DIVISION AUTOMOTRIZ","Herramientas electricas","Herramientas varias"],["DIVISION AUTOMOTRIZ","Herramientas electricas","Lijadoras"],["DIVISION AUTOMOTRIZ","Herramientas electricas","Sierras"],["DIVISION AUTOMOTRIZ","Herramientas electricas","Taladros"],["DIVISION AUTOMOTRIZ","Metalmecanica","Accesorios y repuestos"],["DIVISION AUTOMOTRIZ","Metalmecanica","Sierras"],["DIVISION AUTOMOTRIZ","Metalmecanica","Taladros"],["DIVISION AUTOMOTRIZ","Metalmecanica","Tornos"],["ENERGIAS RENOVABLES","Accesorios","Almacenamiento"],["ENERGIAS RENOVABLES","Accesorios","Captación"],["ENERGIAS RENOVABLES","Accesorios","Conversión"],["ENERGIAS RENOVABLES","Equipos","Almacenamiento"],["ENERGIAS RENOVABLES","Equipos","Captación"],["ENERGIAS RENOVABLES","Equipos","Conversión"],["ENERGIAS RENOVABLES","Insumos","Captación"],["FERRETERIA Y HOGAR","Abrasivos","Lija de agua"],["FERRETERIA Y HOGAR","Abrasivos","Lijas"],["FERRETERIA Y HOGAR","Abrasivos","Lijas en seco"],["FERRETERIA Y HOGAR","Abrasivos","Lijas velcron"],["FERRETERIA Y HOGAR","Adhesivos y selladores","Cintas"],["FERRETERIA Y HOGAR","Adhesivos y selladores","Complementos"],["FERRETERIA Y HOGAR","Adhesivos y selladores","Espumas"],["FERRETERIA Y HOGAR","Adhesivos y selladores","Silicones"],["FERRETERIA Y HOGAR","Alimentos y bebidas","Bebidas"],["FERRETERIA Y HOGAR","Alimentos y bebidas","Snacks"],["FERRETERIA Y HOGAR","Arte","Accesorios arte"],["FERRETERIA Y HOGAR","Arte","Bastidores"],["FERRETERIA Y HOGAR","Arte","Decoracion paredes"],["FERRETERIA Y HOGAR","Arte","Maderas"],["FERRETERIA Y HOGAR","Arte","Pinceles"],["FERRETERIA Y HOGAR","Arte","Pinturas y spray"],["FERRETERIA Y HOGAR","Envases","Envases"],["FERRETERIA Y HOGAR","Herrajes y anclajes","Alambres"],["FERRETERIA Y HOGAR","Herrajes y anclajes","Cadenas"],["FERRETERIA Y HOGAR","Herrajes y anclajes","Candados"],["FERRETERIA Y HOGAR","Herrajes y anclajes","Cerraduras"],["FERRETERIA Y HOGAR","Herrajes y anclajes","Herrajes"],["FERRETERIA Y HOGAR","Herrajes y anclajes","Pernos y clavos"],["FERRETERIA Y HOGAR","Herrajes y anclajes","Sujetadores"],["FERRETERIA Y HOGAR","Herramientas de aplicaci n","Brochas"],["FERRETERIA Y HOGAR","Herramientas de aplicaci n","Complementos de aplicacion"],["FERRETERIA Y HOGAR","Herramientas de aplicaci n","Espatulas"],["FERRETERIA Y HOGAR","Herramientas de aplicaci n","Rodillos"],["FERRETERIA Y HOGAR","Hidrosanitaria","Accesorios"],["FERRETERIA Y HOGAR","Hidrosanitaria","Banos y griferia"],["FERRETERIA Y HOGAR","Hidrosanitaria","Complementos tuberia"],["FERRETERIA Y HOGAR","Hidrosanitaria","Tuberia PVC"],["FERRETERIA Y HOGAR","Hogar","Audio y video"],["FERRETERIA Y HOGAR","Hogar","Complementos"],["FERRETERIA Y HOGAR","Hogar","Domotica"],["FERRETERIA Y HOGAR","Hogar","Extractores"],["FERRETERIA Y HOGAR","Hogar","Intercomunicadores y timbres"],["FERRETERIA Y HOGAR","Hogar","Juguetes"],["FERRETERIA Y HOGAR","Hogar","Muebles"],["FERRETERIA Y HOGAR","Hogar","Pilas y linternas"],["FERRETERIA Y HOGAR","Hogar","Plantas"],["FERRETERIA Y HOGAR","Hogar","Plasticos"],["FERRETERIA Y HOGAR","Hogar","Purificacion agua"],["FERRETERIA Y HOGAR","Hogar","Ventilacion"],["FERRETERIA Y HOGAR","Limpieza","Desinfectantes"],["FERRETERIA Y HOGAR","Limpieza","Limpiadores"],["FERRETERIA Y HOGAR","Limpieza","Recipientes"],["FERRETERIA Y HOGAR","Linea autocare","Accesorios y repuestos"],["FERRETERIA Y HOGAR","Linea autocare","Aditivos"],["FERRETERIA Y HOGAR","Linea autocare","Limpiadores"],["FERRETERIA Y HOGAR","Linea autocare","Mantenimiento"],["FERRETERIA Y HOGAR","Material electrico","Cables"],["FERRETERIA Y HOGAR","Material electrico","Herramientas electricas"],["FERRETERIA Y HOGAR","Material electrico","Herramientas y accesorios"],["FERRETERIA Y HOGAR","Material electrico","Iluminacion"],["FERRETERIA Y HOGAR","Outdoors","Accesorios parrillas"],["FERRETERIA Y HOGAR","Outdoors","Calentadores"],["FERRETERIA Y HOGAR","Outdoors","Carpas"],["FERRETERIA Y HOGAR","Outdoors","Coolers"],["FERRETERIA Y HOGAR","Outdoors","Parrillas gas y carbon"],["FERRETERIA Y HOGAR","Seguridad Industrial","Bioseguridad"],["FERRETERIA Y HOGAR","Seguridad Industrial","Complementos"],["FERRETERIA Y HOGAR","Seguridad Industrial","Equipos de proteccion personal"],["FERRETERIA Y HOGAR","Seguridad Industrial","Extintores"],["FERRETERIA Y HOGAR","Seguridad Industrial","Proteccion manos"],["FERRETERIA Y HOGAR","Seguridad Industrial","Senalizacion"],["FERRETERIA Y HOGAR","Sprays","Arte Urbano"],["FERRETERIA Y HOGAR","Sprays","Complementos"],["FERRETERIA Y HOGAR","Sprays","Especiales"],["FERRETERIA Y HOGAR","Sprays","Uso general"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Accesorios"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Aceites"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Brocas"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Complementos"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Discos"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Fresas"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Gratas"],["MAQUINARIA Y HERRAMIENTAS","Accesorios y consumibles","Repuestos"],["MAQUINARIA Y HERRAMIENTAS","Aspiradoras","Accesorios y repuestos"],["MAQUINARIA Y HERRAMIENTAS","Aspiradoras","Equipos"],["MAQUINARIA Y HERRAMIENTAS","Bombas de Agua","Accesorios y repuestos"],["MAQUINARIA Y HERRAMIENTAS","Bombas de Agua","Centrifuga"],["MAQUINARIA Y HERRAMIENTAS","Bombas de Agua","Motobomba"],["MAQUINARIA Y HERRAMIENTAS","Bombas de Agua","Periferica"],["MAQUINARIA Y HERRAMIENTAS","Bombas de Agua","Sumergible"],["MAQUINARIA Y HERRAMIENTAS","Bombas de Agua","Usos especiales"],["MAQUINARIA Y HERRAMIENTAS","Calentamiento y purificacion","Accesorios y repuestos"],["MAQUINARIA Y HERRAMIENTAS","Calentamiento y purificacion","Calefones a gas"],["MAQUINARIA Y HERRAMIENTAS","Calentamiento y purificacion","Calentador electrico"],["MAQUINARIA Y HERRAMIENTAS","Compresores","Accesorios y repuestos"],["MAQUINARIA Y HERRAMIENTAS","Compresores","Aceites"],["MAQUINARIA Y HERRAMIENTAS","Compresores","Silenciosos"],["MAQUINARIA Y HERRAMIENTAS","Compresores","Tornillo electrico"],["MAQUINARIA Y HERRAMIENTAS","Compresores","Transmisi n Directa"],["MAQUINARIA Y HERRAMIENTAS","Compresores","Transmisi n por banda"],["MAQUINARIA Y HERRAMIENTAS","Equipos de construccion","Equipos de construccion"],["MAQUINARIA Y HERRAMIENTAS","Equipos de manejo de carga","Apiladores y paleteras"],["MAQUINARIA Y HERRAMIENTAS","Equipos de manejo de carga","Complementos"],["MAQUINARIA Y HERRAMIENTAS","Equipos de manejo de carga","Elevadores"],["MAQUINARIA Y HERRAMIENTAS","Equipos de manejo de carga","Montacargas"],["MAQUINARIA Y HERRAMIENTAS","Equipos de manejo de carga","Repuestos"],["MAQUINARIA Y HERRAMIENTAS","Generadores","Accesorios y repuestos"],["MAQUINARIA Y HERRAMIENTAS","Generadores","Domesticos"],["MAQUINARIA Y HERRAMIENTAS","Generadores","Industrial"],["MAQUINARIA Y HERRAMIENTAS","Herramientas","Accesorios y repuestos"],["MAQUINARIA Y HERRAMIENTAS","Herramientas","Complementos"],["MAQUINARIA Y HERRAMIENTAS","Herramientas","Herramientas electricas"],["MAQUINARIA Y HERRAMIENTAS","Herramientas","Herramientas manuales"],["MAQUINARIA Y HERRAMIENTAS","Herramientas","Herramientas neumaticas"],["MAQUINARIA Y HERRAMIENTAS","Herramientas","Pistolas de gravedad"],["MAQUINARIA Y HERRAMIENTAS","Hidrolavadoras","Accesorios y repuestos"],["MAQUINARIA Y HERRAMIENTAS","Hidrolavadoras","Combusti n"],["MAQUINARIA Y HERRAMIENTAS","Hidrolavadoras","Electricas"],["MAQUINARIA Y HERRAMIENTAS","Jardineria","Accesorios"],["MAQUINARIA Y HERRAMIENTAS","Jardineria","Complementos"],["MAQUINARIA Y HERRAMIENTAS","Jardineria","Desmalezadoras"],["MAQUINARIA Y HERRAMIENTAS","Jardineria","Poda"],["MAQUINARIA Y HERRAMIENTAS","Jardineria","Repuestos"],["MAQUINARIA Y HERRAMIENTAS","Jardineria","Riego"],["MAQUINARIA Y HERRAMIENTAS","Jardineria","Tractores"],["MAQUINARIA Y HERRAMIENTAS","Sandblasting","Accesorios"],["MAQUINARIA Y HERRAMIENTAS","Sandblasting","Equipos"],["MAQUINARIA Y HERRAMIENTAS","Soldadoras","Complementos"],["MAQUINARIA Y HERRAMIENTAS","Soldadoras","Consumibles soldadoras"],["MAQUINARIA Y HERRAMIENTAS","Soldadoras","Electricas"],["MAQUINARIA Y HERRAMIENTAS","Soldadoras","Motosoldadoras"],["MAQUINARIA Y HERRAMIENTAS","Soldadoras","Repuestos"],["PINTURA","Agregados minerales","Granos"],["PINTURA","Agregados minerales","Minerales"],["PINTURA","Agregados minerales","Pigmentos"],["PINTURA","Agregados minerales","Polvos"],["PINTURA","Airless","Accesorios"],["PINTURA","Airless","Boquillas"],["PINTURA","Airless","Equipos"],["PINTURA","Airless","Mangueras"],["PINTURA","Airless","Pistolas"],["PINTURA","Airless","Repuestos"],["PINTURA","Alta decoracion","Estucos"],["PINTURA","Alta decoracion","Iridiscentes metalizados"],["PINTURA","Alta decoracion","Microcemento"],["PINTURA","Alta decoracion","Rusticos difuminados"],["PINTURA","Alta decoracion","Rusticos texturados"],["PINTURA","Alta decoracion","Velados y tamponados"],["PINTURA","Arquitectonica","Elastomericos"],["PINTURA","Arquitectonica","Impermeabilizantes"],["PINTURA","Arquitectonica","Imprimantes"],["PINTURA","Arquitectonica","Interiores/exteriores"],["PINTURA","Arquitectonica","Pintura sintetica"],["PINTURA","Arquitectonica","Preparados"],["PINTURA","Arquitectonica","Satinados"],["PINTURA","Automotriz","Acabados"],["PINTURA","Automotriz","Barniz"],["PINTURA","Automotriz","Complementos"],["PINTURA","Automotriz","Pintura nitro"],["PINTURA","Automotriz","Pintura poliester"],["PINTURA","Automotriz","Pintura poliuretano"],["PINTURA","Automotriz","Pintura sintetica"],["PINTURA","Automotriz","Pulimento"],["PINTURA","Catalogos","Cartas de colores"],["PINTURA","Envases","Metalicos"],["PINTURA","Envases","Plasticos"],["PINTURA","Industrial","Caucho de silicon"],["PINTURA","Industrial","Epoxicos"],["PINTURA","Industrial","Horneables"],["PINTURA","Industrial","Poliuretanos"],["PINTURA","Industrial","Resinas epoxicas"],["PINTURA","Industrial","Tintes"],["PINTURA","Madera","Accesorios y repuestos"],["PINTURA","Madera","Aceites y preservantes"],["PINTURA","Madera","Colorantes y tintes"],["PINTURA","Madera","Complementos"],["PINTURA","Madera","Herramientas"],["PINTURA","Madera","Lacas y barnices"],["PINTURA","Madera","Pegamentos"],["PINTURA","Metalmecanica","Anticorrosivos"],["PINTURA","Metalmecanica","Complementos"],["PINTURA","Metalmecanica","Electrostatica"],["PINTURA","Metalmecanica","Esmaltes"],["PINTURA","Metalmecanica","Herramientas"],["PINTURA","Plasticos reforzados","Aditivos y complementos"],["PINTURA","Plasticos reforzados","Fibra"],["PINTURA","Plasticos reforzados","Resinas"],["PINTURA","Preparadores de superficie","Complementos"],["PINTURA","Preparadores de superficie","Fijadores"],["PINTURA","Preparadores de superficie","Fondos"],["PINTURA","Preparadores de superficie","Limpiadores"],["PINTURA","Preparadores de superficie","Masillas"],["PINTURA","Preparadores de superficie","Primers"],["PINTURA","Reactivos y solventes","Aguarras"],["PINTURA","Reactivos y solventes","Reactivos"],["PINTURA","Reactivos y solventes","Thinner acrilico"],["PINTURA","Reactivos y solventes","Thinner caucho clorado"],["PINTURA","Reactivos y solventes","Thinner epoxico"],["PINTURA","Reactivos y solventes","Thinner laca"],["PINTURA","Reactivos y solventes","Thinner poliuretano"],["PINTURA","Usos especiales","Altas temperaturas"],["PINTURA","Usos especiales","Canchas deportivas"],["PINTURA","Usos especiales","Recubrimientos para baldes"],["PINTURA","Usos especiales","Techos"],["PINTURA","Vial","Complementos"],["PINTURA","Vial","Senalizacion"]];
+const CATS_JSON = [{"categoria": "ACABADOS Y CONSTRUCCION", "lineas": [{"linea": "Construciones livianas", "sublineas": ["Complementos", "Estructura", "fibrocemento", "Herramientas", "Masillas", "Planchas gypsum"]}, {"linea": "Impermeabilizantes", "sublineas": ["Complementos", "Impermeabilizantes asfalticos", "Impermeabilizantes en membrana", "Impermeabilizantes liquidos"]}, {"linea": "Morteros", "sublineas": ["Aditivos", "Cementos", "Empastes", "Pegantes", "Selladores"]}, {"linea": "Pisos", "sublineas": ["Ceramica", "Complementos", "Herramientas", "Piso bambu", "Piso de ingenieria", "Piso flotante", "Piso madera solida", "Piso PVC", "Piso SPC", "Porcelanato", "Protectores y limpiadores"]}, {"linea": "Revestimientos", "sublineas": ["Paneles de aluminio", "Planchas de granito", "Planchas PVC", "Planchas PVC Sintra", "Revestimientos de Piedra"]}, {"linea": "Techos y cubiertas", "sublineas": ["Complementos", "Planchas UPVC", "Policarbonato", "Teja espanola PVC"]}]}, {"categoria": "DIVISION AUTOMOTRIZ", "lineas": [{"linea": "Equipamiento automotriz", "sublineas": ["Alineacion y balanceo", "Elevadores", "Enderezada y pintura", "Equipos de diagnostico", "Equipos de lubricacion", "Herramientas hidraulicas", "Herramientas manuales", "Repuestos", "Soportes y ergonomia"]}, {"linea": "Generadores", "sublineas": ["A Bateria", "Accesorios y repuestos"]}, {"linea": "Herramientas electricas", "sublineas": ["Accesorios y repuestos", "Amoladoras y pulidoras", "Herramientas varias", "Lijadoras", "Sierras", "Taladros"]}, {"linea": "Metalmecanica", "sublineas": ["Accesorios y repuestos", "Sierras", "Taladros", "Tornos"]}]}, {"categoria": "ENERGIAS RENOVABLES", "lineas": [{"linea": "Accesorios", "sublineas": ["Almacenamiento", "Captación", "Conversión"]}, {"linea": "Equipos", "sublineas": ["Almacenamiento", "Captación", "Conversión"]}, {"linea": "Insumos", "sublineas": ["Captación"]}]}, {"categoria": "FERRETERIA Y HOGAR", "lineas": [{"linea": "Abrasivos", "sublineas": ["Lija de agua", "Lijas", "Lijas en seco", "Lijas velcron"]}, {"linea": "Adhesivos y selladores", "sublineas": ["Cintas", "Complementos", "Espumas", "Silicones"]}, {"linea": "Alimentos y bebidas", "sublineas": ["Bebidas", "Snacks"]}, {"linea": "Arte", "sublineas": ["Accesorios arte", "Bastidores", "Decoracion paredes", "Maderas", "Pinceles", "Pinturas y spray"]}, {"linea": "Envases", "sublineas": ["Envases"]}, {"linea": "Herrajes y anclajes", "sublineas": ["Alambres", "Cadenas", "Candados", "Cerraduras", "Herrajes", "Pernos y clavos", "Sujetadores"]}, {"linea": "Herramientas de aplicaci n", "sublineas": ["Brochas", "Complementos de aplicacion", "Espatulas", "Rodillos"]}, {"linea": "Hidrosanitaria", "sublineas": ["Accesorios", "Banos y griferia", "Complementos tuberia", "Tuberia PVC"]}, {"linea": "Hogar", "sublineas": ["Audio y video", "Complementos", "Domotica", "Extractores", "Intercomunicadores y timbres", "Juguetes", "Muebles", "Pilas y linternas", "Plantas", "Plasticos", "Purificacion agua", "Ventilacion"]}, {"linea": "Limpieza", "sublineas": ["Desinfectantes", "Limpiadores", "Recipientes"]}, {"linea": "Linea autocare", "sublineas": ["Accesorios y repuestos", "Aditivos", "Limpiadores", "Mantenimiento"]}, {"linea": "Material electrico", "sublineas": ["Cables", "Herramientas electricas", "Herramientas y accesorios", "Iluminacion"]}, {"linea": "Outdoors", "sublineas": ["Accesorios parrillas", "Calentadores", "Carpas", "Coolers", "Parrillas gas y carbon"]}, {"linea": "Seguridad Industrial", "sublineas": ["Bioseguridad", "Complementos", "Equipos de proteccion personal", "Extintores", "Proteccion manos", "Senalizacion"]}, {"linea": "Sprays", "sublineas": ["Arte Urbano", "Complementos", "Especiales", "Uso general"]}]}, {"categoria": "MAQUINARIA Y HERRAMIENTAS", "lineas": [{"linea": "Accesorios y consumibles", "sublineas": ["Accesorios", "Aceites", "Brocas", "Complementos", "Discos", "Fresas", "Gratas", "Repuestos"]}, {"linea": "Aspiradoras", "sublineas": ["Accesorios y repuestos", "Equipos"]}, {"linea": "Bombas de Agua", "sublineas": ["Accesorios y repuestos", "Centrifuga", "Motobomba", "Periferica", "Sumergible", "Usos especiales"]}, {"linea": "Calentamiento y purificacion", "sublineas": ["Accesorios y repuestos", "Calefones a gas", "Calentador electrico"]}, {"linea": "Compresores", "sublineas": ["Accesorios y repuestos", "Aceites", "Silenciosos", "Tornillo electrico", "Transmisi n Directa", "Transmisi n por banda"]}, {"linea": "Equipos de construccion", "sublineas": ["Equipos de construccion"]}, {"linea": "Equipos de manejo de carga", "sublineas": ["Apiladores y paleteras", "Complementos", "Elevadores", "Montacargas", "Repuestos"]}, {"linea": "Generadores", "sublineas": ["Accesorios y repuestos", "Domesticos", "Industrial"]}, {"linea": "Herramientas", "sublineas": ["Accesorios y repuestos", "Complementos", "Herramientas electricas", "Herramientas manuales", "Herramientas neumaticas", "Pistolas de gravedad"]}, {"linea": "Hidrolavadoras", "sublineas": ["Accesorios y repuestos", "Combusti n", "Electricas"]}, {"linea": "Jardineria", "sublineas": ["Accesorios", "Complementos", "Desmalezadoras", "Poda", "Repuestos", "Riego", "Tractores"]}, {"linea": "Sandblasting", "sublineas": ["Accesorios", "Equipos"]}, {"linea": "Soldadoras", "sublineas": ["Complementos", "Consumibles soldadoras", "Electricas", "Motosoldadoras", "Repuestos"]}]}, {"categoria": "PINTURA", "lineas": [{"linea": "Agregados minerales", "sublineas": ["Granos", "Minerales", "Pigmentos", "Polvos"]}, {"linea": "Airless", "sublineas": ["Accesorios", "Boquillas", "Equipos", "Mangueras", "Pistolas", "Repuestos"]}, {"linea": "Alta decoracion", "sublineas": ["Estucos", "Iridiscentes metalizados", "Microcemento", "Rusticos difuminados", "Rusticos texturados", "Velados y tamponados"]}, {"linea": "Arquitectonica", "sublineas": ["Elastomericos", "Impermeabilizantes", "Imprimantes", "Interiores/exteriores", "Pintura sintetica", "Preparados", "Satinados"]}, {"linea": "Automotriz", "sublineas": ["Acabados", "Barniz", "Complementos", "Pintura nitro", "Pintura poliester", "Pintura poliuretano", "Pintura sintetica", "Pulimento"]}, {"linea": "Catalogos", "sublineas": ["Cartas de colores"]}, {"linea": "Envases", "sublineas": ["Metalicos", "Plasticos"]}, {"linea": "Industrial", "sublineas": ["Caucho de silicon", "Epoxicos", "Horneables", "Poliuretanos", "Resinas epoxicas", "Tintes"]}, {"linea": "Madera", "sublineas": ["Accesorios y repuestos", "Aceites y preservantes", "Colorantes y tintes", "Complementos", "Herramientas", "Lacas y barnices", "Pegamentos"]}, {"linea": "Metalmecanica", "sublineas": ["Anticorrosivos", "Complementos", "Electrostatica", "Esmaltes", "Herramientas"]}, {"linea": "Plasticos reforzados", "sublineas": ["Aditivos y complementos", "Fibra", "Resinas"]}, {"linea": "Preparadores de superficie", "sublineas": ["Complementos", "Fijadores", "Fondos", "Limpiadores", "Masillas", "Primers"]}, {"linea": "Reactivos y solventes", "sublineas": ["Aguarras", "Reactivos", "Thinner acrilico", "Thinner caucho clorado", "Thinner epoxico", "Thinner laca", "Thinner poliuretano"]}, {"linea": "Usos especiales", "sublineas": ["Altas temperaturas", "Canchas deportivas", "Recubrimientos para baldes", "Techos"]}, {"linea": "Vial", "sublineas": ["Complementos", "Senalizacion"]}]}];
 const u=a=>[...new Set(a)].sort();
+let products=[],channels=new Set(["magento","ml","general"]),running=false;
 
-let products=[], channels=new Set(['magento','ml','mkt']), running=false;
+const dz=document.getElementById("dz");
+dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("over");});
+dz.addEventListener("dragleave",()=>dz.classList.remove("over"));
+dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("over");onFiles(e.dataTransfer.files);});
+document.getElementById("fileIn").addEventListener("change",function(){onFiles(this.files);this.value="";});
 
-// Dropzone
-const dz=document.getElementById('dz');
-dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});
-dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
-dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');onFiles(e.dataTransfer.files);});
-document.getElementById('fileIn').addEventListener('change',function(){onFiles(this.files);this.value='';});
-
-function onFiles(files){
-  [...files].filter(f=>f.name.endsWith('.pdf')||f.type==='application/pdf').forEach(f=>{
-    products.push({id:Date.now()+Math.random(),file:f,sku:f.name.replace(/\.pdf$/i,''),cat:'',sub:'',lin:'',status:'pending',result:null});
+async function onFiles(files){
+  const pdfs=[...files].filter(f=>f.name.endsWith(".pdf")||f.type==="application/pdf");
+  if(!pdfs.length)return;
+  const apiKey=document.getElementById("apiKey").value.trim();
+  pdfs.forEach(f=>{
+    products.push({id:Date.now()+Math.random(),file:f,sku:f.name.replace(/\.pdf$/i,""),cat:"",lin:"",sub:"",status:"pending",result:null});
   });
   renderTable();updateStats();
-  ['tableCard','configCard','genCard'].forEach(id=>document.getElementById(id).style.display='block');
+  document.getElementById("tableCard").style.display="block";
+  document.getElementById("genCard").style.display="block";
   updateBanner();
+
+  // Auto-classify with AI if API key is present
+  if(apiKey){
+    await autoClassify(pdfs, apiKey);
+  } else {
+    const b=document.getElementById("classifyBanner");
+    b.style.display="flex";
+    document.getElementById("classifyBannerTxt").textContent="Ingresa tu API Key (arriba) para activar la clasificación automática con IA.";
+  }
+}
+
+async function autoClassify(files, apiKey){
+  const banner=document.getElementById("classifyBanner");
+  banner.style.display="flex";
+  banner.className="banner warn";
+
+  // Find products that just got added (status === pending, no cat)
+  const toClassify=products.filter(p=>!p.cat&&p.status==="pending");
+
+  for(let i=0;i<toClassify.length;i++){
+    const p=toClassify[i];
+    document.getElementById("classifyBannerTxt").textContent=`🤖 Clasificando ${i+1} de ${toClassify.length}: ${p.file.name}...`;
+    updateRowStatus(p.id,"classifying");
+
+    try{
+      const pdf64=await toBase64(p.file);
+      const prompt=`Analiza esta ficha técnica de producto. Clasifícalo dentro de las categorías de PINTULAC Ecuador.
+
+CATEGORÍAS DISPONIBLES:
+${JSON.stringify(CATS_JSON)}
+
+Responde ÚNICAMENTE con este JSON, sin texto extra:
+{"categoria":"...","linea":"...","sublinea":"..."}
+
+Usa EXACTAMENTE los valores del JSON de categorías. Si no puedes determinar con certeza, usa el más cercano.`;
+
+      const res=await fetch("/.netlify/functions/claude-proxy",{
+        method:"POST",
+        headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-version":"2023-06-01"},
+        body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:200,messages:[{role:"user",content:[{type:"document",source:{type:"base64",media_type:"application/pdf",data:pdf64}},{type:"text",text:prompt}]}]})
+      });
+      const data=await res.json();
+      if(data.error)throw new Error(data.error.message);
+      const raw=(data.content||[]).map(b=>b.text||"").join("").replace(/```json|```/g,"").trim();
+      const parsed=JSON.parse(raw);
+      p.cat=parsed.categoria||"";
+      p.lin=parsed.linea||"";
+      p.sub=parsed.sublinea||"";
+    }catch(e){
+      console.warn("Auto-classify error:", e.message);
+    }
+    p.status="pending";
+    updateStats();
+    renderTable();
+    if(i<toClassify.length-1) await new Promise(r=>setTimeout(r,400));
+  }
+
+  banner.style.display="none";
 }
 
 function clearAll(){
-  if(!confirm('¿Limpiar todos los productos?'))return;
+  if(!confirm("¿Limpiar todos los productos?"))return;
   products=[];renderTable();updateStats();
-  ['tableCard','configCard','genCard'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById('exportSection').classList.remove('on');
+  document.getElementById("tableCard").style.display="none";
+  document.getElementById("genCard").style.display="none";
+  document.getElementById("exportSection").classList.remove("on");
 }
 
 function renderTable(){
-  const tbody=document.getElementById('prodBody');
-  if(!products.length){tbody.innerHTML='<tr><td colspan="8" style="padding:30px;text-align:center;color:var(--text3);font-size:11px;font-weight:600;">No hay productos. Arrastra PDFs arriba.</td></tr>';return;}
+  const tbody=document.getElementById("prodBody");
+  if(!products.length){tbody.innerHTML="<tr><td colspan=\"8\" style=\"padding:30px;text-align:center;color:var(--text3);font-size:11px;font-weight:600;\">No hay productos. Arrastra PDFs arriba.</td></tr>";return;}
   tbody.innerHTML=products.map((p,i)=>`
     <tr id="row-${p.id}">
       <td class="td-num">${i+1}</td>
       <td><div class="td-file-name" title="${p.file.name}">${p.file.name}</div><div class="td-file-size">${(p.file.size/1024).toFixed(0)} KB</div></td>
       <td class="td-sku"><input type="text" value="${p.sku}" onchange="products[${i}].sku=this.value" placeholder="SKU"></td>
-      <td class="td-cat"><select onchange="onCat(${i},this.value)"><option value="">— Categoría —</option>${u(D.map(r=>r[0])).map(c=>`<option value="${c}"${p.cat===c?' selected':''}>${c}</option>`).join('')}</select></td>
-      <td class="td-sub"><select onchange="onSub(${i},this.value)" ${!p.cat?'disabled':''}><option value="">— Línea —</option>${p.cat?u(D.filter(r=>r[0]===p.cat).map(r=>r[1])).map(s=>`<option value="${s}"${p.sub===s?' selected':''}>${s}</option>`).join(''):''}</select></td>
-      <td class="td-lin"><select onchange="products[${i}].lin=this.value" ${!p.sub?'disabled':''}><option value="">— Sublínea —</option>${p.sub?u(D.filter(r=>r[0]===p.cat&&r[1]===p.sub).map(r=>r[2])).map(l=>`<option value="${l}"${p.lin===l?' selected':''}>${l}</option>`).join(''):''}</select></td>
+      <td class="td-cat"><select onchange="onCat(${i},this.value)"><option value="">— Categoría —</option>${u(D.map(r=>r[0])).map(c=>"<option value=\""+c+"\""+( p.cat===c?" selected":"")+">"+c+"</option>").join("")}</select></td>
+      <td class="td-lin"><select onchange="onLin(${i},this.value)" ${!p.cat?"disabled":""}><option value="">— Línea —</option>${p.cat?u(D.filter(r=>r[0]===p.cat).map(r=>r[1])).map(l=>"<option value=\""+l+"\""+( p.lin===l?" selected":"")+">"+l+"</option>").join(""):""}</select></td>
+      <td class="td-sub"><select onchange="products[${i}].sub=this.value" ${!p.lin?"disabled":""}><option value="">— Sublínea —</option>${p.lin?u(D.filter(r=>r[0]===p.cat&&r[1]===p.lin).map(r=>r[2])).map(s=>"<option value=\""+s+"\""+( p.sub===s?" selected":"")+">"+s+"</option>").join(""):""}</select></td>
       <td class="td-status">${badge(p.status)}</td>
       <td class="td-del"><button class="btn-del" onclick="removeP(${i})">✕</button></td>
-    </tr>`).join('');
+    </tr>`).join("");
 }
 
 function badge(s){
-  if(s==='pending')return'<span class="badge pending">⏳ Pendiente</span>';
-  if(s==='running')return'<span class="badge running"><span class="spin-sm"></span> Generando</span>';
-  if(s==='done')return'<span class="badge done">✓ Listo</span>';
-  return'<span class="badge error">✕ Error</span>';
+  if(s==="pending")return"<span class=\"badge pending\">⏳ Pendiente</span>";
+  if(s==="classifying")return"<span class=\"badge classifying\"><span class=\"spin-sm\"></span> Clasificando</span>";
+  if(s==="running")return"<span class=\"badge running\"><span class=\"spin-sm yellow\"></span> Generando</span>";
+  if(s==="done")return"<span class=\"badge done\">✓ Listo</span>";
+  return"<span class=\"badge error\">✕ Error</span>";
 }
-function updateRow(id,s){const r=document.getElementById('row-'+id);if(r)r.querySelector('.td-status').innerHTML=badge(s);}
-function onCat(i,v){products[i].cat=v;products[i].sub='';products[i].lin='';renderTable();}
-function onSub(i,v){products[i].sub=v;products[i].lin='';renderTable();}
-function removeP(i){products.splice(i,1);renderTable();updateStats();if(!products.length)['tableCard','configCard','genCard'].forEach(id=>document.getElementById(id).style.display='none');updateBanner();}
-function toggleCh(el,ch){el.classList.toggle('on');channels.has(ch)?channels.delete(ch):channels.add(ch);}
+function updateRowStatus(id,status){
+  const idx=products.findIndex(p=>p.id===id);
+  if(idx>=0){products[idx].status=status;}
+  const row=document.getElementById("row-"+id);
+  if(row)row.querySelector(".td-status").innerHTML=badge(status);
+}
+function onCat(i,v){products[i].cat=v;products[i].lin="";products[i].sub="";renderTable();}
+function onLin(i,v){products[i].lin=v;products[i].sub="";renderTable();}
+function removeP(i){products.splice(i,1);renderTable();updateStats();if(!products.length){document.getElementById("tableCard").style.display="none";document.getElementById("genCard").style.display="none";}updateBanner();}
+function toggleCh(el,ch){el.classList.toggle("on");channels.has(ch)?channels.delete(ch):channels.add(ch);}
 function updateStats(){
-  document.getElementById('stTotal').textContent=products.length;
-  document.getElementById('stPending').textContent=products.filter(p=>p.status==='pending').length;
-  document.getElementById('stDone').textContent=products.filter(p=>p.status==='done').length;
-  document.getElementById('stError').textContent=products.filter(p=>p.status==='error').length;
+  document.getElementById("stTotal").textContent=products.length;
+  document.getElementById("stPending").textContent=products.filter(p=>p.status==="pending").length;
+  document.getElementById("stDone").textContent=products.filter(p=>p.status==="done").length;
+  document.getElementById("stError").textContent=products.filter(p=>p.status==="error").length;
 }
-function updateBanner(){const t=products.length;document.getElementById('bannerTxt').textContent=`${t} producto${t!==1?'s':''} en la cola. El sistema procesará cada PDF en secuencia.`;}
-function setProgress(done,total){const pct=total?Math.round(done/total*100):0;document.getElementById('progressFill').style.width=pct+'%';document.getElementById('progressPct').textContent=pct+'%';document.getElementById('progressLabel').textContent=`Procesando ${done} de ${total} productos...`;}
-function toBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(f);});}
-function showErr(m){const e=document.getElementById('errMsg');e.textContent=m;e.classList.add('on');}
-function hideErr(){document.getElementById('errMsg').classList.remove('on');}
+function updateBanner(){const t=products.length;document.getElementById("bannerTxt").textContent=`${t} producto${t!==1?"s":""} en la cola. Contenido optimizado con SEO y GEO para Ecuador.`;}
+function setProgress(done,total){const pct=total?Math.round(done/total*100):0;document.getElementById("progressFill").style.width=pct+"%";document.getElementById("progressPct").textContent=pct+"%";document.getElementById("progressLabel").textContent=`Procesando ${done} de ${total} productos...`;}
+function toBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(",")[1]);r.onerror=rej;r.readAsDataURL(f);});}
+function showErr(m){const e=document.getElementById("errMsg");e.textContent=m;e.classList.add("on");}
+function hideErr(){document.getElementById("errMsg").classList.remove("on");}
 
 async function generar(){
   if(running)return;
   const chs=[...channels];
-  const apiKey=document.getElementById('apiKey').value.trim();
-  if(!products.length){showErr('Carga al menos un PDF primero.');return;}
-  if(!chs.length){showErr('Selecciona al menos un canal.');return;}
-  if(!apiKey){showErr('Ingresa tu API Key de Anthropic.');return;}
+  const apiKey=document.getElementById("apiKey").value.trim();
+  if(!products.length){showErr("Carga al menos un PDF primero.");return;}
+  if(!chs.length){showErr("Selecciona al menos un canal.");return;}
+  if(!apiKey){showErr("Ingresa tu API Key de Anthropic.");return;}
   const sinCat=products.filter(p=>!p.cat);
   if(sinCat.length){showErr(`${sinCat.length} producto(s) sin categoría. Por favor completa la clasificación.`);return;}
   hideErr();running=true;
-  document.getElementById('btnGen').disabled=true;
-  document.getElementById('btnTxt').innerHTML='<span class="spin"></span> Procesando lote...';
-  document.getElementById('progressWrap').classList.add('on');
-  document.getElementById('exportSection').classList.remove('on');
-  products.forEach(p=>{if(p.status!=='done')p.status='pending';});
+  document.getElementById("btnGen").disabled=true;
+  document.getElementById("btnTxt").innerHTML="<span class=\"spin\"></span> Procesando lote...";
+  document.getElementById("progressWrap").classList.add("on");
+  document.getElementById("exportSection").classList.remove("on");
+  products.forEach(p=>{if(p.status!=="done")p.status="pending";});
   renderTable();updateStats();
 
   const chP={
-    magento:`"magento":{"short_description":"2-3 oraciones texto plano beneficios B2C","description":"HTML con p ul li 280-360 palabras tono B2C","meta_title":"max 60 chars","meta_keywords":"12-15 keywords separadas por coma","meta_description":"max 160 chars"}`,
-    ml:`"mercadolibre":{"titulo":"max 60 chars Producto+Marca+Espec","descripcion":"texto plano 230-280 palabras secciones en MAYUSCULAS"}`,
-    mkt:`"marketplaces":{"titulo":"max 70 chars","descripcion":"texto plano 210-260 palabras tono Ecuador local"}`,
-    b2c:`"b2c":{"descripcion_corta":"1-2 oraciones gancho B2C","descripcion_larga":"HTML con p ul li 260-340 palabras tono cálido","keywords":"10-12 keywords SEO B2C"}`,
-    b2b:`"b2b":{"descripcion_corta":"1-2 oraciones técnicas para empresas","descripcion_larga":"HTML con p ul li 260-340 palabras técnico-comercial","keywords":"10-12 keywords B2B"}`,
-    pim:`"pim":{"nombre_normalizado":"Marca+Producto+EspecPrincipal","descripcion_corta":"1 oración técnica neutral","descripcion_larga":"texto plano 180-240 palabras neutro","atributos":"Atributo: Valor uno por línea"}`
+    magento:`"magento":{"short_description":"2-3 oraciones texto plano con keywords Ecuador","description":"HTML con p ul li 280-360 palabras optimizado SEO+GEO Ecuador","meta_title":"max 60 chars con keyword principal + Ecuador","meta_keywords":"12-15 keywords incluyendo variantes Ecuador Quito Guayaquil","meta_description":"max 160 chars con keyword + beneficio + Ecuador"}`,
+    ml:`"mercadolibre":{"titulo":"max 60 chars Producto+Marca+Espec","descripcion":"texto plano 230-280 palabras secciones en MAYUSCULAS optimizado Ecuador"}`,
+    general:`"general":{"descripcion_corta":"2-3 oraciones gancho vendedor con keywords Ecuador","descripcion_larga":"texto plano 260-340 palabras beneficios SEO+GEO Ecuador"}`
   };
 
-  const pending=products.filter(p=>p.status==='pending');
+  const pending=products.filter(p=>p.status==="pending");
   let done=0;
 
   for(const p of pending){
-    p.status='running';updateRow(p.id,'running');updateStats();setProgress(done,pending.length);
+    p.status="running";updateRowStatus(p.id,"running");updateStats();setProgress(done,pending.length);
     try{
       const pdf64=await toBase64(p.file);
-      const schema='{'+chs.map(ch=>chP[ch]).filter(Boolean).join(',')+'}';
-      const cat=`${p.cat}${p.sub?' › '+p.sub:''}${p.lin?' › '+p.lin:''}`;
-      const prompt=`Eres experto en contenido de producto para PINTULAC, empresa ecuatoriana líder, slogan "tu amigo experto". Venden pinturas, herramientas, maquinaria y acabados de construcción en Ecuador.\n\nSKU: ${p.sku}\nCATEGORÍA PINTULAC: ${cat}\nCANALES: ${chs.join(', ')}\n\nLa ficha técnica completa está en el PDF adjunto. Extrae toda la información disponible.\n\nGenera contenido SOLO para los canales solicitados. Tono: cálido/beneficios para B2C/Magento/Marketplaces, técnico-comercial para B2B, neutral para PIM, directo para Mercado Libre.\n\nREGLAS: Sin precios, envíos, devoluciones ni contactos. Sin links externos. Solo HTML básico donde se indica. Español Ecuador.\n\nResponde ÚNICAMENTE con este JSON válido, sin backticks, sin texto extra:\n${schema}`;
-      const res=await fetch('/.netlify/functions/claude-proxy',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3500,messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pdf64}},{type:'text',text:prompt}]}]})});
+      const schema="{"+chs.map(ch=>chP[ch]).filter(Boolean).join(",")+"}";
+      const cat=`${p.cat}${p.lin?" › "+p.lin:""}${p.sub?" › "+p.sub:""}`;
+      const prompt=`Eres experto en contenido de producto y SEO para PINTULAC, empresa ecuatoriana líder en pinturas, herramientas y acabados de construcción. Slogan: "tu amigo experto". Operan en todo Ecuador con presencia en Quito, Guayaquil, Cuenca y otras ciudades.
+
+SKU: ${p.sku}
+CATEGORÍA PINTULAC: ${cat}
+CANALES: ${chs.join(", ")}
+
+La ficha técnica completa está en el PDF adjunto. Extrae toda la información disponible.
+
+Genera contenido SOLO para los canales solicitados. Tono: cálido y vendedor para todos los canales.
+
+REGLAS: Sin precios, envíos ni contactos. Sin links externos. Solo HTML básico donde se indica. Español Ecuador (no usar vosotros). SEO: incluir keywords con variantes Ecuador, Quito, Guayaquil donde sea natural. GEO: mencionar clima, altitud o contexto local ecuatoriano cuando sea relevante.
+
+Responde ÚNICAMENTE con este JSON válido, sin backticks, sin texto extra:
+${schema}`;
+      const res=await fetch("/.netlify/functions/claude-proxy",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:3500,messages:[{role:"user",content:[{type:"document",source:{type:"base64",media_type:"application/pdf",data:pdf64}},{type:"text",text:prompt}]}]})});
       const data=await res.json();
       if(data.error)throw new Error(data.error.message);
-      p.result=JSON.parse((data.content||[]).map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
-      p.status='done';
-    }catch(e){p.status='error';p.errorMsg=e.message;}
-    done++;updateRow(p.id,p.status);updateStats();setProgress(done,pending.length);
+      p.result=JSON.parse((data.content||[]).map(b=>b.text||"").join("").replace(/```json|```/g,"").trim());
+      p.status="done";
+    }catch(e){p.status="error";p.errorMsg=e.message;console.error(e);}
+    done++;updateRowStatus(p.id,p.status);updateStats();setProgress(done,pending.length);
     if(done<pending.length)await new Promise(r=>setTimeout(r,800));
   }
 
   running=false;
-  document.getElementById('btnGen').disabled=false;
-  document.getElementById('btnTxt').innerHTML='⚡ Generar todo el lote';
-  document.getElementById('progressLabel').textContent=`✓ Completado · ${products.filter(p=>p.status==='done').length} exitosos · ${products.filter(p=>p.status==='error').length} con error`;
-  if(products.some(p=>p.status==='done'))document.getElementById('exportSection').classList.add('on');
+  document.getElementById("btnGen").disabled=false;
+  document.getElementById("btnTxt").innerHTML="⚡ Generar todo el lote";
+  document.getElementById("progressLabel").textContent=`✓ Completado · ${products.filter(p=>p.status==="done").length} exitosos · ${products.filter(p=>p.status==="error").length} con error`;
+  if(products.some(p=>p.status==="done"))document.getElementById("exportSection").classList.add("on");
 }
 
-function ts(){return new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);}
-function dl(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();}
-function esc(s){return s?String(s).replace(/"/g,'""'):'';}
+function ts(){return new Date().toISOString().replace(/[:.]/g,"-").slice(0,19);}
+function dl(name,content,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();}
+function esc(s){return s?String(s).replace(/"/g,"\"\""):"" ;}
 
 function expMagento(){
-  const done=products.filter(p=>p.status==='done'&&p.result?.magento);
-  if(!done.length){alert('No hay productos con contenido de Magento.');return;}
-  const cols=['sku','attribute_set_code','product_type','categories','product_websites','name','description','short_description','tax_class_name','visibility','price','url_key','meta_title','meta_keywords','meta_description','base_image','base_image_label','small_image','small_image_label','thumbnail_image','thumbnail_image_label','swatch_image','swatch_image_label','gift_message_available','msrp_display_actual_price_type','additional_attributes'];
-  const rows=[cols.map(c=>`"${c}"`).join(','),...done.map(p=>{const m=p.result.magento;const v={sku:p.sku,attribute_set_code:'pintulac',product_type:'simple',categories:'',product_websites:'base',name:'',description:m.description||'',short_description:m.short_description||'',tax_class_name:'Producto con IVA',visibility:'Catalog, Search',price:'',url_key:'',meta_title:m.meta_title||'',meta_keywords:m.meta_keywords||'',meta_description:m.meta_description||'',base_image:'',base_image_label:'',small_image:'',small_image_label:'',thumbnail_image:'',thumbnail_image_label:'',swatch_image:'',swatch_image_label:'',gift_message_available:'Use config',msrp_display_actual_price_type:'Use config',additional_attributes:''};return cols.map(c=>`"${esc(v[c])}"`).join(',');})];
-  dl('pintulac_magento2_'+ts()+'.csv',rows.join('\n'),'text/csv;charset=utf-8;');
+  const done=products.filter(p=>p.status==="done"&&p.result?.magento);
+  if(!done.length){alert("No hay productos con contenido de Magento.");return;}
+  const cols=["sku","attribute_set_code","product_type","categories","product_websites","name","description","short_description","tax_class_name","visibility","price","url_key","meta_title","meta_keywords","meta_description","base_image","base_image_label","small_image","small_image_label","thumbnail_image","thumbnail_image_label","swatch_image","swatch_image_label","gift_message_available","msrp_display_actual_price_type","additional_attributes"];
+  const rows=[cols.map(c=>'"'+c+'"').join(","),...done.map(p=>{const m=p.result.magento;const v={sku:p.sku,attribute_set_code:"pintulac",product_type:"simple",categories:"",product_websites:"base",name:"",description:m.description||"",short_description:m.short_description||"",tax_class_name:"Producto con IVA",visibility:"Catalog, Search",price:"",url_key:"",meta_title:m.meta_title||"",meta_keywords:m.meta_keywords||"",meta_description:m.meta_description||"",base_image:"",base_image_label:"",small_image:"",small_image_label:"",thumbnail_image:"",thumbnail_image_label:"",swatch_image:"",swatch_image_label:"",gift_message_available:"Use config",msrp_display_actual_price_type:"Use config",additional_attributes:""};return cols.map(c=>'"'+esc(v[c])+'"').join(",");})];
+  dl("pintulac_magento2_"+ts()+".csv",rows.join("\n"),"text/csv;charset=utf-8;");
 }
-function expML(){const d=products.filter(p=>p.status==='done'&&p.result?.mercadolibre);if(!d.length){alert('No hay contenido de Mercado Libre.');return;}dl('pintulac_mercadolibre_'+ts()+'.txt',d.map((p,i)=>`${'═'.repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${'═'.repeat(60)}\nTÍTULO:\n${p.result.mercadolibre.titulo||''}\n\nDESCRIPCIÓN:\n${p.result.mercadolibre.descripcion||''}\n`).join('\n\n'),'text/plain;charset=utf-8;');}
-function expMkt(){const d=products.filter(p=>p.status==='done'&&p.result?.marketplaces);if(!d.length){alert('No hay contenido de Marketplaces.');return;}dl('pintulac_marketplaces_'+ts()+'.txt',d.map((p,i)=>`${'═'.repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${'═'.repeat(60)}\nTÍTULO:\n${p.result.marketplaces.titulo||''}\n\nDESCRIPCIÓN:\n${p.result.marketplaces.descripcion||''}\n`).join('\n\n'),'text/plain;charset=utf-8;');}
-function expB2C(){const d=products.filter(p=>p.status==='done'&&p.result?.b2c);if(!d.length){alert('No hay contenido B2C.');return;}dl('pintulac_b2c_'+ts()+'.txt',d.map((p,i)=>`${'═'.repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${'═'.repeat(60)}\nDESCRIPCIÓN CORTA:\n${p.result.b2c.descripcion_corta||''}\n\nDESCRIPCIÓN LARGA:\n${p.result.b2c.descripcion_larga||''}\n\nKEYWORDS:\n${p.result.b2c.keywords||''}\n`).join('\n\n'),'text/plain;charset=utf-8;');}
-function expB2B(){const d=products.filter(p=>p.status==='done'&&p.result?.b2b);if(!d.length){alert('No hay contenido B2B.');return;}dl('pintulac_b2b_'+ts()+'.txt',d.map((p,i)=>`${'═'.repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${'═'.repeat(60)}\nDESCRIPCIÓN CORTA:\n${p.result.b2b.descripcion_corta||''}\n\nDESCRIPCIÓN LARGA:\n${p.result.b2b.descripcion_larga||''}\n\nKEYWORDS:\n${p.result.b2b.keywords||''}\n`).join('\n\n'),'text/plain;charset=utf-8;');}
-function expAll(){dl('pintulac_lote_'+ts()+'.json',JSON.stringify(products.filter(p=>p.status==='done').map(p=>({sku:p.sku,categoria:p.cat,linea:p.sub,sublinea:p.lin,resultado:p.result})),null,2),'application/json');}
+function expML(){const d=products.filter(p=>p.status==="done"&&p.result?.mercadolibre);if(!d.length){alert("No hay contenido de Mercado Libre.");return;}dl("pintulac_mercadolibre_"+ts()+".txt",d.map((p,i)=>`${"═".repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${"═".repeat(60)}\nTÍTULO:\n${p.result.mercadolibre.titulo||""}\n\nDESCRIPCIÓN:\n${p.result.mercadolibre.descripcion||""}\n`).join("\n\n"),"text/plain;charset=utf-8;");}
+function expGeneral(){const d=products.filter(p=>p.status==="done"&&p.result?.general);if(!d.length){alert("No hay contenido General.");return;}dl("pintulac_general_"+ts()+".txt",d.map((p,i)=>`${"═".repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${"═".repeat(60)}\nDESCRIPCIÓN CORTA:\n${p.result.general.descripcion_corta||""}\n\nDESCRIPCIÓN LARGA:\n${p.result.general.descripcion_larga||""}\n`).join("\n\n"),"text/plain;charset=utf-8;");}
+function expAll(){dl("pintulac_lote_"+ts()+".json",JSON.stringify(products.filter(p=>p.status==="done").map(p=>({sku:p.sku,categoria:p.cat,linea:p.lin,sublinea:p.sub,resultado:p.result})),null,2),"application/json");}
 </script>
 </body>
 </html>
