@@ -1,5 +1,4 @@
 exports.handler = async function (event) {
-  // Handle CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
@@ -25,8 +24,13 @@ exports.handler = async function (event) {
   }
 
   try {
+    // 25 second timeout to stay under Netlify's 26s limit
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
+
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
@@ -36,6 +40,7 @@ exports.handler = async function (event) {
       body: event.body,
     });
 
+    clearTimeout(timeout);
     const data = await response.json();
 
     return {
@@ -47,10 +52,17 @@ exports.handler = async function (event) {
       body: JSON.stringify(data),
     };
   } catch (err) {
+    const isTimeout = err.name === "AbortError";
     return {
-      statusCode: 500,
+      statusCode: isTimeout ? 504 : 500,
       headers: { "Access-Control-Allow-Origin": "*" },
-      body: JSON.stringify({ error: { message: "Error interno: " + err.message } }),
+      body: JSON.stringify({
+        error: {
+          message: isTimeout
+            ? "El PDF es muy grande o la respuesta tardó demasiado. Intenta con un PDF más pequeño."
+            : "Error interno: " + err.message,
+        },
+      }),
     };
   }
 };
