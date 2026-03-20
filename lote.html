@@ -231,10 +231,10 @@ select:disabled{opacity:.4;cursor:not-allowed;background-color:#f8f9fc;}
     <div class="errmsg" id="errMsg"></div>
     <div class="export-section" id="exportSection">
       <div class="export-title">Exportar resultados</div>
-      <div class="export-grid">
-        <button class="btn-exp primary" onclick="expMagento()">📥 CSV Magento 2</button>
-        <button class="btn-exp" onclick="expML()">📄 TXT Mercado Libre</button>
-        <button class="btn-exp" onclick="expGeneral()">📄 TXT General</button>
+      <div class="export-grid" id="exportGrid">
+        <button class="btn-exp primary" id="expBtnMagento" onclick="expMagento()" style="display:none">📥 CSV Magento 2</button>
+        <button class="btn-exp" id="expBtnMl" onclick="expML()" style="display:none">📊 CSV Mercado Libre</button>
+        <button class="btn-exp" id="expBtnGeneral" onclick="expGeneral()" style="display:none">📊 CSV General</button>
         <button class="btn-exp" onclick="expAll()">📦 JSON Completo</button>
       </div>
     </div>
@@ -443,7 +443,14 @@ ${schema}`;
   document.getElementById("btnGen").disabled=false;
   document.getElementById("btnTxt").innerHTML="⚡ Generar todo el lote";
   document.getElementById("progressLabel").textContent=`✓ Completado · ${products.filter(p=>p.status==="done").length} exitosos · ${products.filter(p=>p.status==="error").length} con error`;
-  if(products.some(p=>p.status==="done"))document.getElementById("exportSection").classList.add("on");
+  if(products.some(p=>p.status==="done")){
+    document.getElementById("exportSection").classList.add("on");
+    // Show only the export button for selected channel
+    const ch=[...channels][0];
+    document.getElementById("expBtnMagento").style.display=ch==="magento"?"flex":"none";
+    document.getElementById("expBtnMl").style.display=ch==="ml"?"flex":"none";
+    document.getElementById("expBtnGeneral").style.display=ch==="general"?"flex":"none";
+  }
 }
 
 function ts(){return new Date().toISOString().replace(/[:.]/g,"-").slice(0,19);}
@@ -457,8 +464,8 @@ function expMagento(){
   const rows=[cols.map(c=>'"'+c+'"').join(","),...done.map(p=>{const m=p.result.magento;const v={sku:p.sku,attribute_set_code:"pintulac",product_type:"simple",categories:"",product_websites:"base",name:"",description:m.description||"",short_description:m.short_description||"",tax_class_name:"Producto con IVA",visibility:"Catalog, Search",price:"",url_key:"",meta_title:m.meta_title||"",meta_keywords:m.meta_keywords||"",meta_description:m.meta_description||"",base_image:"",base_image_label:"",small_image:"",small_image_label:"",thumbnail_image:"",thumbnail_image_label:"",swatch_image:"",swatch_image_label:"",gift_message_available:"Use config",msrp_display_actual_price_type:"Use config",additional_attributes:""};return cols.map(c=>'"'+esc(v[c])+'"').join(",");})];
   dl("pintulac_magento2_"+ts()+".csv",rows.join("\n"),"text/csv;charset=utf-8;");
 }
-function expML(){const d=products.filter(p=>p.status==="done"&&p.result?.mercadolibre);if(!d.length){alert("No hay contenido de Mercado Libre.");return;}dl("pintulac_mercadolibre_"+ts()+".txt",d.map((p,i)=>`${"═".repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${"═".repeat(60)}\nTÍTULO:\n${p.result.mercadolibre.titulo||""}\n\nDESCRIPCIÓN:\n${p.result.mercadolibre.descripcion||""}\n`).join("\n\n"),"text/plain;charset=utf-8;");}
-function expGeneral(){const d=products.filter(p=>p.status==="done"&&p.result?.general);if(!d.length){alert("No hay contenido General.");return;}dl("pintulac_general_"+ts()+".txt",d.map((p,i)=>`${"═".repeat(60)}\nPRODUCTO ${i+1} · SKU: ${p.sku}\n${"═".repeat(60)}\nDESCRIPCIÓN CORTA:\n${p.result.general.descripcion_corta||""}\n\nDESCRIPCIÓN LARGA:\n${p.result.general.descripcion_larga||""}\n`).join("\n\n"),"text/plain;charset=utf-8;");}
+function expML(){const d=products.filter(p=>p.status==="done"&&p.result?.mercadolibre);if(!d.length){alert("No hay contenido de Mercado Libre.");return;}const rows=['"SKU","Titulo","Descripcion"',...d.map(p=>['"'+esc(p.sku||'')+'"','"'+esc(p.result.mercadolibre.titulo||'')+'"','"'+esc(p.result.mercadolibre.descripcion||'')+'"'].join(','))];dl("pintulac_mercadolibre_"+ts()+".csv",rows.join("\n"),"text/csv;charset=utf-8;");}
+function expGeneral(){const d=products.filter(p=>p.status==="done"&&p.result?.general);if(!d.length){alert("No hay contenido General.");return;}const rows=['"SKU","Descripcion_corta","Descripcion_larga"',...d.map(p=>['"'+esc(p.sku||'')+'"','"'+esc(p.result.general.descripcion_corta||'')+'"','"'+esc(p.result.general.descripcion_larga||'')+'"'].join(','))];dl("pintulac_general_"+ts()+".csv",rows.join("\n"),"text/csv;charset=utf-8;");}
 function expAll(){dl("pintulac_lote_"+ts()+".json",JSON.stringify(products.filter(p=>p.status==="done").map(p=>({sku:p.sku,categoria:p.cat,linea:p.lin,sublinea:p.sub,resultado:p.result})),null,2),"application/json");}
 </script>
 </body>
